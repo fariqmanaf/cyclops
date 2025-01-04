@@ -23,7 +23,7 @@ function RouteComponent() {
               Kuliah untuk Negeri
             </p>
             <p className="text-white text-[2.5rem] font-semibold mb-3">
-              Berkarya untuk Joki
+              Berkarya untuk Prestasi
             </p>
             <p className="text-white text-lg">
               Capstone Project adalah proyek akhir yang diberikan di akhir masa
