@@ -1,7 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
 import Navbar from "@/components/OurComponent/Navbar";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 export const Route = createLazyFileRoute("/")({
   component: RouteComponent,

@@ -7,12 +7,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TiThMenu } from "react-icons/ti";
+import { AuthDialogs } from "../AuthPopover";
 
 const Navbar = ({ isAuth }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
-  localStorage.setItem("token", "token");
 
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -108,9 +107,7 @@ const Navbar = ({ isAuth }) => {
                       </Popover>
                     </>
                   ) : (
-                    <Link className=" bg-white text-sm p-2 rounded-full border border-transparent text-[#206EBB] hover:scale-105 transition-all duration-200 ease-in-out">
-                      Masuk Ke Akun
-                    </Link>
+                    <AuthDialogs />
                   )}
                 </div>
               )
@@ -138,9 +135,7 @@ const Navbar = ({ isAuth }) => {
                       </Link>
                     </>
                   ) : (
-                    <Link className=" bg-white text-sm p-2 rounded-full border border-transparent text-[#206EBB] hover:scale-105 transition-all duration-200 ease-in-out">
-                      Masuk Ke Akun
-                    </Link>
+                    <AuthDialogs />
                   )}
                 </div>
               )}
