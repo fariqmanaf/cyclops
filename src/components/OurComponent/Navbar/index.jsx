@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import {
   Popover,
@@ -8,6 +8,9 @@ import {
 } from "@/components/ui/popover";
 import { TiThMenu } from "react-icons/ti";
 import { AuthDialogs } from "../AuthPopover";
+import { useMutation } from "@tanstack/react-query";
+import { login, register } from "@/service/auth";
+import toast from "react-hot-toast";
 
 const Navbar = ({ isAuth }) => {
   const navigate = useNavigate();
@@ -16,6 +19,28 @@ const Navbar = ({ isAuth }) => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+
+    if (path === "/") {
+      setIsActive("home");
+    } else if (path.startsWith("/topics")) {
+      setIsActive("topics");
+    } else if (path.startsWith("/notification")) {
+      setIsActive("notification");
+    } else if (path.startsWith("/profile")) {
+      setIsActive("profile");
+    } else {
+      setIsActive("");
+    }
+  }, [location.pathname]);
+
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -57,6 +82,34 @@ const Navbar = ({ isAuth }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
+  const { mutate: loginMutation, isPending } = useMutation({
+    mutationFn: (body) => login(body),
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      toast.success("Berhasil login");
+      localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("username", data.user.name);
+      navigate({ to: "/" });
+    },
+  });
+
+  const { mutate: registerMutation, isPending: isRegisterPending } =
+    useMutation({
+      mutationFn: (body) => {
+        return register(body);
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+      onSuccess: () => {
+        toast.success("Berhasil register Silahkan Login");
+        setIsRegisterOpen(false);
+        setIsLoginOpen(true);
+      },
+    });
+
   return (
     <>
       <div className="h-[10vh]"></div>
@@ -83,31 +136,37 @@ const Navbar = ({ isAuth }) => {
                           <TiThMenu className="text-white text-xl" />
                         </PopoverTrigger>
                         <PopoverContent className="text-center text-md w-full flex flex-col gap-2">
-                          <Link
-                            to={"/dashboard"}
-                            className="cursor-pointer block"
-                          >
-                            Mahasiswa
+                          <Link to={"/topics"} className="cursor-pointer block">
+                            Topik
                           </Link>
                           <hr />
                           <Link
-                            to={"/auth/logout"}
+                            to={"/notification"}
                             className="cursor-pointer block"
                           >
-                            Logbook
+                            Notifikasi
                           </Link>
                           <hr />
                           <Link
-                            to={"/auth/logout"}
+                            to={"/profile"}
                             className="cursor-pointer block"
                           >
-                            Absensi
+                            Profil
                           </Link>
                         </PopoverContent>
                       </Popover>
                     </>
                   ) : (
-                    <AuthDialogs />
+                    <AuthDialogs
+                      login={loginMutation}
+                      isPendingLogin={isPending}
+                      register={registerMutation}
+                      isPendingRegister={isRegisterPending}
+                      isLoginOpen={isLoginOpen}
+                      setIsLoginOpen={setIsLoginOpen}
+                      isRegisterOpen={isRegisterOpen}
+                      setIsRegisterOpen={setIsRegisterOpen}
+                    />
                   )}
                 </div>
               )
@@ -116,26 +175,39 @@ const Navbar = ({ isAuth }) => {
                   {token ? (
                     <>
                       <Link
-                        to={"/dashboard"}
-                        className="text-white cursor-pointer"
+                        to={"/topics"}
+                        className={`${isActive === "topics" ? "text-blue-500" : "text-white"} cursor-pointer border border-transparent hover:border-white rounded-full p-2 `}
                       >
-                        Mahasiswa
+                        Topik
                       </Link>
                       <Link
-                        to={"/auth/logout"}
-                        className="text-white cursor-pointer"
+                        to={"/notification"}
+                        className={`${isActive === "notification" ? "text-blue-500" : "text-white"} cursor-pointer border border-transparent hover:border-white rounded-full p-2`}
                       >
-                        Logbook
+                        Notifikasi
                       </Link>
-                      <Link
-                        to={"/auth/logout"}
-                        className="text-white cursor-pointer"
+                      <div
+                        onClick={() => navigate({ to: "/profile" })}
+                        className="rounded-full cursor-pointer flex justify-center items-center p-2 gap-4 bg-white"
                       >
-                        Absensi
-                      </Link>
+                        <img
+                          src="/image/avatar.png"
+                          className="rounded-full w-5"
+                        />
+                        <TiThMenu className="text-lg" />
+                      </div>
                     </>
                   ) : (
-                    <AuthDialogs />
+                    <AuthDialogs
+                      login={loginMutation}
+                      isPendingLogin={isPending}
+                      register={registerMutation}
+                      isPendingRegister={isRegisterPending}
+                      isLoginOpen={isLoginOpen}
+                      setIsLoginOpen={setIsLoginOpen}
+                      isRegisterOpen={isRegisterOpen}
+                      setIsRegisterOpen={setIsRegisterOpen}
+                    />
                   )}
                 </div>
               )}

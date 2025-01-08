@@ -17,6 +17,8 @@ import { Route as rootRoute } from "./routes/__root";
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute("/")();
+const TopicsIndexLazyImport = createFileRoute("/topics/")();
+const NotificationIndexLazyImport = createFileRoute("/notification/")();
 
 // Create/Update Routes
 
@@ -25,6 +27,20 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: "/",
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import("./routes/index.lazy").then((d) => d.Route));
+
+const TopicsIndexLazyRoute = TopicsIndexLazyImport.update({
+  id: "/topics/",
+  path: "/topics/",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import("./routes/topics/index.lazy").then((d) => d.Route));
+
+const NotificationIndexLazyRoute = NotificationIndexLazyImport.update({
+  id: "/notification/",
+  path: "/notification/",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import("./routes/notification/index.lazy").then((d) => d.Route),
+);
 
 // Populate the FileRoutesByPath interface
 
@@ -37,6 +53,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof IndexLazyImport;
       parentRoute: typeof rootRoute;
     };
+    "/notification/": {
+      id: "/notification/";
+      path: "/notification";
+      fullPath: "/notification";
+      preLoaderRoute: typeof NotificationIndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/topics/": {
+      id: "/topics/";
+      path: "/topics";
+      fullPath: "/topics";
+      preLoaderRoute: typeof TopicsIndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
   }
 }
 
@@ -44,32 +74,42 @@ declare module "@tanstack/react-router" {
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexLazyRoute;
+  "/notification": typeof NotificationIndexLazyRoute;
+  "/topics": typeof TopicsIndexLazyRoute;
 }
 
 export interface FileRoutesByTo {
   "/": typeof IndexLazyRoute;
+  "/notification": typeof NotificationIndexLazyRoute;
+  "/topics": typeof TopicsIndexLazyRoute;
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute;
   "/": typeof IndexLazyRoute;
+  "/notification/": typeof NotificationIndexLazyRoute;
+  "/topics/": typeof TopicsIndexLazyRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/";
+  fullPaths: "/" | "/notification" | "/topics";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/";
-  id: "__root__" | "/";
+  to: "/" | "/notification" | "/topics";
+  id: "__root__" | "/" | "/notification/" | "/topics/";
   fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute;
+  NotificationIndexLazyRoute: typeof NotificationIndexLazyRoute;
+  TopicsIndexLazyRoute: typeof TopicsIndexLazyRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  NotificationIndexLazyRoute: NotificationIndexLazyRoute,
+  TopicsIndexLazyRoute: TopicsIndexLazyRoute,
 };
 
 export const routeTree = rootRoute
@@ -82,11 +122,19 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.jsx",
       "children": [
-        "/"
+        "/",
+        "/notification/",
+        "/topics/"
       ]
     },
     "/": {
       "filePath": "index.lazy.jsx"
+    },
+    "/notification/": {
+      "filePath": "notification/index.lazy.jsx"
+    },
+    "/topics/": {
+      "filePath": "topics/index.lazy.jsx"
     }
   }
 }

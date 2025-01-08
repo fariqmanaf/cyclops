@@ -26,9 +26,7 @@ export function SelectFieldComponent({
       name={identifier}
       render={({ field }) => (
         <FormItem className="w-full">
-          <FormLabel className="text-[#7126B5] text-sm font-semibold">
-            {label}
-          </FormLabel>
+          <FormLabel className=" text-sm font-semibold">{label}</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger>
