@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,11 +13,18 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
+import ReactLoading from "react-loading";
 
-export function AuthDialogs() {
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-
+export function AuthDialogs({
+  login,
+  isPendingLogin,
+  register,
+  isPendingRegister,
+  isLoginOpen,
+  setIsLoginOpen,
+  isRegisterOpen,
+  setIsRegisterOpen,
+}) {
   const formSchema = z.object({
     email: z.string().email(),
     password: z.string().min(6, {
@@ -37,9 +43,10 @@ export function AuthDialogs() {
 
   const formRegisterSchema = z
     .object({
-      fullName: z.string(),
+      name: z.string(),
+      email: z.string().email(),
       nim: z.string(),
-      noTelp: z.string(),
+      noHp: z.string(),
       password: z.string().min(8, {
         message: "Password harus lebih dari 8 karakter",
       }),
@@ -57,9 +64,10 @@ export function AuthDialogs() {
   const formRegister = useForm({
     resolver: zodResolver(formRegisterSchema),
     defaultValues: {
-      fullName: "",
+      name: "",
+      email: "",
       nim: "",
-      noTelp: "",
+      noHp: "",
       password: "",
       confirmPassword: "",
     },
@@ -67,11 +75,19 @@ export function AuthDialogs() {
   });
 
   const onSubmit = (values) => {
-    console.log(values);
+    login(values);
   };
 
   const onSubmitRegister = (values) => {
-    console.log(values);
+    const dataRegister = {
+      name: values.name,
+      email: values.email,
+      nim: values.nim,
+      noHp: values.noHp,
+      password: values.password,
+    };
+
+    register(dataRegister);
   };
 
   return (
@@ -109,7 +125,17 @@ export function AuthDialogs() {
               </div>
               <DialogFooter>
                 <Button className="self-center" type="submit">
-                  Masuk
+                  {isPendingLogin ? (
+                    <ReactLoading
+                      type={"spin"}
+                      color={"#FFFFFF"}
+                      height={"15%"}
+                      width={"15%"}
+                      className="flex justify-center items-center"
+                    />
+                  ) : (
+                    <p>Masuk</p>
+                  )}
                 </Button>
                 <DialogDescription className="mt-5">
                   Belum punya akun?{" "}
@@ -141,10 +167,17 @@ export function AuthDialogs() {
               <div className="grid gap-4 py-4">
                 <InputFormComponent
                   form={formRegister}
-                  identifier={"fullName"}
+                  identifier={"name"}
                   label={"Nama Lengkap"}
                   placeholder={"Masukkan Nama Lengkap Anda"}
                   type={"text"}
+                />
+                <InputFormComponent
+                  form={formRegister}
+                  identifier={"email"}
+                  label={"Email"}
+                  placeholder={"Masukkan Email Anda"}
+                  type={"email"}
                 />
                 <InputFormComponent
                   form={formRegister}
@@ -155,7 +188,7 @@ export function AuthDialogs() {
                 />
                 <InputFormComponent
                   form={formRegister}
-                  identifier={"noTelp"}
+                  identifier={"noHp"}
                   label={"Nomor Telepon"}
                   placeholder={"Masukkan Nomor Telepon Anda"}
                   type={"text"}
@@ -177,7 +210,17 @@ export function AuthDialogs() {
               </div>
               <DialogFooter>
                 <Button className="self-center" type="submit">
-                  Daftar
+                  {isPendingRegister ? (
+                    <ReactLoading
+                      type={"spin"}
+                      color={"#FFFFFF"}
+                      height={"15%"}
+                      width={"15%"}
+                      className="flex justify-center items-center"
+                    />
+                  ) : (
+                    <p>Daftar</p>
+                  )}
                 </Button>
                 <DialogDescription className="mt-5">
                   Sudah punya akun?{" "}
