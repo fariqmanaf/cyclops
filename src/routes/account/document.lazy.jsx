@@ -17,15 +17,20 @@ import {
     MoreVertical 
   } from 'lucide-react';
 import Navbar from '@/components/OurComponent/Navbar'
+import { Protected } from '@/components/OurComponent/AuthMiddleware'
 
 export const Route = createLazyFileRoute('/account/document')({
-  component: RouteComponent,
+  component: () => (
+    <Protected>
+      <DocumentView/>
+    </Protected>
+  ),
 })
 
-function RouteComponent() {
+function DocumentView() {
   return (
     <>
-        <Navbar />
+        <Navbar isAuth={true} />
         <div className='container mx-auto p-6 flex flex-col md:flex-row gap-6'>
             <div className='w-full md:w-80 space-y-6'>
                 <DataProfile />
