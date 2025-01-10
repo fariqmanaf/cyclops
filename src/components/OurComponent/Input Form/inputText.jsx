@@ -13,6 +13,7 @@ export function InputFormComponent({
   label,
   placeholder,
   type,
+  className,
 }) {
   return (
     <FormField
@@ -20,7 +21,7 @@ export function InputFormComponent({
       name={identifier}
       render={({ field }) => (
         <FormItem>
-          <FormLabel className="text-[#7126B5] text-sm font-semibold">
+          <FormLabel className={`text-sm font-semibold ${className}`}>
             {label}
           </FormLabel>
           <FormControl>

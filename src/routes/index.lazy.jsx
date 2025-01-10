@@ -1,7 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
 import Navbar from "@/components/OurComponent/Navbar";
-import toast, { Toaster } from "react-hot-toast";
 
 export const Route = createLazyFileRoute("/")({
   component: RouteComponent,
@@ -11,7 +9,6 @@ function RouteComponent() {
   return (
     <>
       <Navbar isAuth={true} />
-      <Toaster position="right-top" />
       <div className="w-screen h-[90vh] flex items-center">
         <img
           src="/image/bg.jpg"
