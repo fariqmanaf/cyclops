@@ -1,17 +1,17 @@
-import { Protected } from '@/components/OurComponent/AuthMiddleware'
-import ChangePassword from '@/components/OurComponent/ChangePassword'
-import Navbar from '@/components/OurComponent/Navbar'
-import DataProfile from '@/components/OurComponent/Profile'
-import SidebarMahasiswa from '@/components/OurComponent/Sidebar/Mahasiswa'
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { Protected } from "@/components/OurComponent/AuthMiddleware";
+import ChangePassword from "@/components/OurComponent/ChangePassword";
+import Navbar from "@/components/OurComponent/Navbar";
+import DataProfile from "@/components/OurComponent/Profile";
+import SidebarMahasiswa from "@/components/OurComponent/Sidebar/Mahasiswa";
+import { createLazyFileRoute } from "@tanstack/react-router";
 
-export const Route = createLazyFileRoute('/account/ChangePassword')({
+export const Route = createLazyFileRoute("/account/changePassword")({
   component: () => (
     <Protected>
       <Password />
     </Protected>
   ),
-})
+});
 
 function Password() {
   return (
@@ -25,5 +25,5 @@ function Password() {
         <ChangePassword />
       </div>
     </>
-  )
+  );
 }
