@@ -31,3 +31,18 @@ export const register = async (data) => {
 
   return result?.data;
 };
+
+export const getProfile = async () => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  const result = await response.json();
+  if (result.status === "Failed") {
+    throw new Error(result?.message);
+  }
+
+  return result;
+};

@@ -1,5 +1,5 @@
 import Navbar from "@/components/OurComponent/Navbar";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { CardTopics } from "@/components/OurComponent/CardTopics";
 import { motion } from "motion/react";
 import { Protected } from "@/components/OurComponent/AuthMiddleware";
@@ -8,35 +8,60 @@ import { getAllTopics } from "@/service/topics";
 import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
 
-export const Route = createLazyFileRoute("/topics/")({
+export const Route = createLazyFileRoute("/dosen/topics/")({
   component: () => (
-    <Protected roles={["mahasiswa"]}>
-      <TopicsComponent />
+    <Protected roles={["dosen"]}>
+      <DosenTopicsComponent />
     </Protected>
   ),
 });
 
-function TopicsComponent() {
+function DosenTopicsComponent() {
   const [topicsData, setTopicsData] = useState([]);
+  const [deletedTopic, setDeletedTopic] = useState({
+    status: false,
+    id: "",
+  });
 
-  const { data, isLoading, isError, isSuccess } = useQuery({
+  const {
+    data: topicData,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useQuery({
     queryKey: ["topics"],
     queryFn: () => getAllTopics(),
   });
 
   useEffect(() => {
     if (isSuccess) {
-      setTopicsData(data);
+      setTopicsData(topicData);
     } else if (isError) {
       toast.error("Gagal mengambil data topik");
     }
-  }, [isSuccess, isError, data]);
+  }, [isSuccess, isError, topicData]);
+
+  useEffect(() => {
+    if (deletedTopic.status === true) {
+      setTopicsData((prevData) =>
+        prevData.filter((topic) => topic.id !== deletedTopic.id),
+      );
+    }
+  }, [deletedTopic]);
 
   return (
     <>
       <Navbar isAuth={true} />
       <div className="w-screen h-[90vh] flex flex-col pt-20 md:px-32 px-16">
-        <p className="text-2xl font-semibold mb-10">Topik Capstone</p>
+        <div className="flex justify-between">
+          <p className="text-2xl font-semibold mb-10">Topik Capstone</p>
+          <Link
+            to={`/dosen/topics/create`}
+            className="p-2 h-10 bg-slate-900 text-white text-center rounded-xl hover:bg-slate-700"
+          >
+            Tambah Topik
+          </Link>
+        </div>
         {isLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <ReactLoading type="spin" color="#273B4A" />
@@ -50,7 +75,12 @@ function TopicsComponent() {
             transition={{ duration: 1 }}
           >
             {topicsData.map((topic) => (
-              <CardTopics key={topic.id} data={topic} />
+              <CardTopics
+                key={topic.id}
+                data={topic}
+                isDosen={true}
+                setDeletedTopic={setDeletedTopic}
+              />
             ))}
           </motion.div>
         )}

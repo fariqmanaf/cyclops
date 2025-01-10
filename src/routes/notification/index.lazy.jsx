@@ -11,10 +11,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Protected } from "@/components/OurComponent/AuthMiddleware";
 import { motion } from "motion/react";
+import { useSelector } from "react-redux";
 
 export const Route = createLazyFileRoute("/notification/")({
   component: () => (
-    <Protected>
+    <Protected roles={["mahasiswa"]}>
       <NotificationComponent />
     </Protected>
   ),
@@ -22,7 +23,7 @@ export const Route = createLazyFileRoute("/notification/")({
 
 function NotificationComponent() {
   const [isOpened, setIsOpened] = useState(false);
-  const username = localStorage.getItem("username");
+  const username = useSelector((state) => state.auth?.user?.name);
 
   return (
     <>
@@ -46,7 +47,7 @@ function NotificationComponent() {
               </div>
               <div className="text-left">
                 <p className="font-semibold">
-                  HAI, {username.toLocaleUpperCase()}
+                  HAI, {username ? username?.toLocaleUpperCase() : "Pengguna"}
                 </p>
                 <p>
                   Selamat anda sudah mendaftar, nantikan info update terbaru!
