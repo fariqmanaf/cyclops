@@ -148,7 +148,7 @@ const Navbar = ({ isAuth }) => {
                           </Link>
                           <hr />
                           <Link
-                            to={"/profile"}
+                            to={"/account"}
                             className="cursor-pointer block"
                           >
                             Profil
@@ -187,7 +187,7 @@ const Navbar = ({ isAuth }) => {
                         Notifikasi
                       </Link>
                       <div
-                        onClick={() => navigate({ to: "/profile" })}
+                        onClick={() => navigate({ to: "/account" })}
                         className="rounded-full cursor-pointer flex justify-center items-center p-2 gap-4 bg-white"
                       >
                         <img

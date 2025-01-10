@@ -19,6 +19,15 @@ import { Route as rootRoute } from "./routes/__root";
 const IndexLazyImport = createFileRoute("/")();
 const TopicsIndexLazyImport = createFileRoute("/topics/")();
 const NotificationIndexLazyImport = createFileRoute("/notification/")();
+const AccountIndexLazyImport = createFileRoute("/account/")();
+const AccountLogbookprogressLazyImport = createFileRoute(
+  "/account/logbookprogress",
+)();
+const AccountLogbookLazyImport = createFileRoute("/account/logbook")();
+const AccountDocumentLazyImport = createFileRoute("/account/document")();
+const AccountChangePasswordLazyImport = createFileRoute(
+  "/account/changePassword",
+)();
 
 // Create/Update Routes
 
@@ -42,6 +51,48 @@ const NotificationIndexLazyRoute = NotificationIndexLazyImport.update({
   import("./routes/notification/index.lazy").then((d) => d.Route),
 );
 
+const AccountIndexLazyRoute = AccountIndexLazyImport.update({
+  id: "/account/",
+  path: "/account/",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import("./routes/account/index.lazy").then((d) => d.Route),
+);
+
+const AccountLogbookprogressLazyRoute = AccountLogbookprogressLazyImport.update(
+  {
+    id: "/account/logbookprogress",
+    path: "/account/logbookprogress",
+    getParentRoute: () => rootRoute,
+  } as any,
+).lazy(() =>
+  import("./routes/account/logbookprogress.lazy").then((d) => d.Route),
+);
+
+const AccountLogbookLazyRoute = AccountLogbookLazyImport.update({
+  id: "/account/logbook",
+  path: "/account/logbook",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import("./routes/account/logbook.lazy").then((d) => d.Route),
+);
+
+const AccountDocumentLazyRoute = AccountDocumentLazyImport.update({
+  id: "/account/document",
+  path: "/account/document",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import("./routes/account/document.lazy").then((d) => d.Route),
+);
+
+const AccountChangePasswordLazyRoute = AccountChangePasswordLazyImport.update({
+  id: "/account/changePassword",
+  path: "/account/changePassword",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import("./routes/account/changePassword.lazy").then((d) => d.Route),
+);
+
 // Populate the FileRoutesByPath interface
 
 declare module "@tanstack/react-router" {
@@ -51,6 +102,41 @@ declare module "@tanstack/react-router" {
       path: "/";
       fullPath: "/";
       preLoaderRoute: typeof IndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/account/changePassword": {
+      id: "/account/changePassword";
+      path: "/account/changePassword";
+      fullPath: "/account/changePassword";
+      preLoaderRoute: typeof AccountChangePasswordLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/account/document": {
+      id: "/account/document";
+      path: "/account/document";
+      fullPath: "/account/document";
+      preLoaderRoute: typeof AccountDocumentLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/account/logbook": {
+      id: "/account/logbook";
+      path: "/account/logbook";
+      fullPath: "/account/logbook";
+      preLoaderRoute: typeof AccountLogbookLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/account/logbookprogress": {
+      id: "/account/logbookprogress";
+      path: "/account/logbookprogress";
+      fullPath: "/account/logbookprogress";
+      preLoaderRoute: typeof AccountLogbookprogressLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/account/": {
+      id: "/account/";
+      path: "/account";
+      fullPath: "/account";
+      preLoaderRoute: typeof AccountIndexLazyImport;
       parentRoute: typeof rootRoute;
     };
     "/notification/": {
@@ -74,12 +160,22 @@ declare module "@tanstack/react-router" {
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexLazyRoute;
+  "/account/changePassword": typeof AccountChangePasswordLazyRoute;
+  "/account/document": typeof AccountDocumentLazyRoute;
+  "/account/logbook": typeof AccountLogbookLazyRoute;
+  "/account/logbookprogress": typeof AccountLogbookprogressLazyRoute;
+  "/account": typeof AccountIndexLazyRoute;
   "/notification": typeof NotificationIndexLazyRoute;
   "/topics": typeof TopicsIndexLazyRoute;
 }
 
 export interface FileRoutesByTo {
   "/": typeof IndexLazyRoute;
+  "/account/changePassword": typeof AccountChangePasswordLazyRoute;
+  "/account/document": typeof AccountDocumentLazyRoute;
+  "/account/logbook": typeof AccountLogbookLazyRoute;
+  "/account/logbookprogress": typeof AccountLogbookprogressLazyRoute;
+  "/account": typeof AccountIndexLazyRoute;
   "/notification": typeof NotificationIndexLazyRoute;
   "/topics": typeof TopicsIndexLazyRoute;
 }
@@ -87,27 +183,67 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute;
   "/": typeof IndexLazyRoute;
+  "/account/changePassword": typeof AccountChangePasswordLazyRoute;
+  "/account/document": typeof AccountDocumentLazyRoute;
+  "/account/logbook": typeof AccountLogbookLazyRoute;
+  "/account/logbookprogress": typeof AccountLogbookprogressLazyRoute;
+  "/account/": typeof AccountIndexLazyRoute;
   "/notification/": typeof NotificationIndexLazyRoute;
   "/topics/": typeof TopicsIndexLazyRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/notification" | "/topics";
+  fullPaths:
+    | "/"
+    | "/account/changePassword"
+    | "/account/document"
+    | "/account/logbook"
+    | "/account/logbookprogress"
+    | "/account"
+    | "/notification"
+    | "/topics";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/notification" | "/topics";
-  id: "__root__" | "/" | "/notification/" | "/topics/";
+  to:
+    | "/"
+    | "/account/changePassword"
+    | "/account/document"
+    | "/account/logbook"
+    | "/account/logbookprogress"
+    | "/account"
+    | "/notification"
+    | "/topics";
+  id:
+    | "__root__"
+    | "/"
+    | "/account/changePassword"
+    | "/account/document"
+    | "/account/logbook"
+    | "/account/logbookprogress"
+    | "/account/"
+    | "/notification/"
+    | "/topics/";
   fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute;
+  AccountChangePasswordLazyRoute: typeof AccountChangePasswordLazyRoute;
+  AccountDocumentLazyRoute: typeof AccountDocumentLazyRoute;
+  AccountLogbookLazyRoute: typeof AccountLogbookLazyRoute;
+  AccountLogbookprogressLazyRoute: typeof AccountLogbookprogressLazyRoute;
+  AccountIndexLazyRoute: typeof AccountIndexLazyRoute;
   NotificationIndexLazyRoute: typeof NotificationIndexLazyRoute;
   TopicsIndexLazyRoute: typeof TopicsIndexLazyRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  AccountChangePasswordLazyRoute: AccountChangePasswordLazyRoute,
+  AccountDocumentLazyRoute: AccountDocumentLazyRoute,
+  AccountLogbookLazyRoute: AccountLogbookLazyRoute,
+  AccountLogbookprogressLazyRoute: AccountLogbookprogressLazyRoute,
+  AccountIndexLazyRoute: AccountIndexLazyRoute,
   NotificationIndexLazyRoute: NotificationIndexLazyRoute,
   TopicsIndexLazyRoute: TopicsIndexLazyRoute,
 };
@@ -123,12 +259,32 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
+        "/account/changePassword",
+        "/account/document",
+        "/account/logbook",
+        "/account/logbookprogress",
+        "/account/",
         "/notification/",
         "/topics/"
       ]
     },
     "/": {
       "filePath": "index.lazy.jsx"
+    },
+    "/account/changePassword": {
+      "filePath": "account/changePassword.lazy.jsx"
+    },
+    "/account/document": {
+      "filePath": "account/document.lazy.jsx"
+    },
+    "/account/logbook": {
+      "filePath": "account/logbook.lazy.jsx"
+    },
+    "/account/logbookprogress": {
+      "filePath": "account/logbookprogress.lazy.jsx"
+    },
+    "/account/": {
+      "filePath": "account/index.lazy.jsx"
     },
     "/notification/": {
       "filePath": "notification/index.lazy.jsx"
