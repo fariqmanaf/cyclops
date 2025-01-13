@@ -1,33 +1,32 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useMutation } from '@tanstack/react-query';
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useMutation } from "@tanstack/react-query";
 
 const LogbookProgress = () => {
-
-    const mutation = useMutation({
-        mutationFn: async (formData) => {
-          // Replace with your API endpoint
-          const response = await fetch('/api/progress', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-          return response.json();
+  const mutation = useMutation({
+    mutationFn: async (formData) => {
+      // Replace with your API endpoint
+      const response = await fetch("/api/progress", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify(formData),
       });
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-        mutation.mutate(data);
-      };
-    
+      return response.json();
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    mutation.mutate(data);
+  };
+
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
       <div className="mb-4">
@@ -63,7 +62,11 @@ const LogbookProgress = () => {
 
               <div>
                 <Label htmlFor="rincianKegiatan">Rincian Kegiatan</Label>
-                <Textarea id="rincianKegiatan" name="rincianKegiatan" required />
+                <Textarea
+                  id="rincianKegiatan"
+                  name="rincianKegiatan"
+                  required
+                />
               </div>
 
               <div>
@@ -73,12 +76,12 @@ const LogbookProgress = () => {
 
               <div>
                 <Label htmlFor="buktiKegiatan">Bukti Kegiatan</Label>
-                <Input 
-                  id="buktiKegiatan" 
-                  name="buktiKegiatan" 
-                  type="file" 
-                  className="mt-1" 
-                  required 
+                <Input
+                  id="buktiKegiatan"
+                  name="buktiKegiatan"
+                  type="file"
+                  className="mt-1"
+                  required
                 />
               </div>
 
@@ -96,15 +99,13 @@ const LogbookProgress = () => {
               >
                 Kembali
               </Button>
-              <Button type="submit">
-                Selesai
-              </Button>
+              <Button type="submit">Selesai</Button>
             </div>
           </form>
         </CardContent>
       </Card>
     </div>
   );
-}
+};
 
 export default LogbookProgress;
