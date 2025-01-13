@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllTopics } from "@/service/topics";
 import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
+import toast from "react-hot-toast";
 
 export const Route = createLazyFileRoute("/topics/")({
   component: () => (
@@ -28,7 +29,7 @@ function TopicsComponent() {
     if (isSuccess) {
       setTopicsData(data);
     } else if (isError) {
-      toast.error("Gagal mengambil data topik");
+      toast.error("Anda Belum Melengkapi Dokumen");
     }
   }, [isSuccess, isError, data]);
 

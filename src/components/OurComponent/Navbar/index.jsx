@@ -41,6 +41,8 @@ const Navbar = ({ isAuth }) => {
       setIsActive("profile");
     } else if (path.startsWith("/dosen/topics")) {
       setIsActive("dosenTopics");
+    } else if (path.startsWith("/mahasiswa/pendaftar")) {
+      setIsActive("pendaftar");
     } else if (path.startsWith("/mahasiswa")) {
       setIsActive("mahasiswa");
     } else if (path.startsWith("/logbook")) {
@@ -169,6 +171,13 @@ const Navbar = ({ isAuth }) => {
                               </Link>
                               <hr />
                               <Link
+                                to={"/mahasiswa/pendaftar"}
+                                className="cursor-pointer block"
+                              >
+                                Pendaftar
+                              </Link>
+                              <hr />
+                              <Link
                                 to={"/logbook"}
                                 className="cursor-pointer block"
                               >
@@ -246,6 +255,12 @@ const Navbar = ({ isAuth }) => {
                           className={`${isActive === "mahasiswa" ? "text-blue-500" : "text-white"} cursor-pointer border border-transparent hover:border-white rounded-full p-2 `}
                         >
                           Mahasiswa
+                        </Link>
+                        <Link
+                          to={"/mahasiswa/pendaftar"}
+                          className={`${isActive === "pendaftar" ? "text-blue-500" : "text-white"} cursor-pointer border border-transparent hover:border-white rounded-full p-2 `}
+                        >
+                          Pendaftar
                         </Link>
                         <Link
                           to={"/logbook"}

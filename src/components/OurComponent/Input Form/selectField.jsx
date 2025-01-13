@@ -30,7 +30,7 @@ export function SelectFieldComponent({
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder={placeholder} />
+                <SelectValue />
               </SelectTrigger>
             </FormControl>
             <SelectContent>

@@ -22,6 +22,7 @@ const NotificationIndexLazyImport = createFileRoute("/notification/")();
 const MahasiswaIndexLazyImport = createFileRoute("/mahasiswa/")();
 const LogbookIndexLazyImport = createFileRoute("/logbook/")();
 const AbsensiIndexLazyImport = createFileRoute("/absensi/")();
+const MahasiswaPendaftarLazyImport = createFileRoute("/mahasiswa/pendaftar")();
 const DosenTopicsIndexLazyImport = createFileRoute("/dosen/topics/")();
 const DosenTopicsCreateLazyImport = createFileRoute("/dosen/topics/create")();
 const DosenTopicsTopicIdLazyImport = createFileRoute(
@@ -74,6 +75,14 @@ const AbsensiIndexLazyRoute = AbsensiIndexLazyImport.update({
   import("./routes/absensi/index.lazy").then((d) => d.Route),
 );
 
+const MahasiswaPendaftarLazyRoute = MahasiswaPendaftarLazyImport.update({
+  id: "/mahasiswa/pendaftar",
+  path: "/mahasiswa/pendaftar",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import("./routes/mahasiswa/pendaftar.lazy").then((d) => d.Route),
+);
+
 const DosenTopicsIndexLazyRoute = DosenTopicsIndexLazyImport.update({
   id: "/dosen/topics/",
   path: "/dosen/topics/",
@@ -107,6 +116,13 @@ declare module "@tanstack/react-router" {
       path: "/";
       fullPath: "/";
       preLoaderRoute: typeof IndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/mahasiswa/pendaftar": {
+      id: "/mahasiswa/pendaftar";
+      path: "/mahasiswa/pendaftar";
+      fullPath: "/mahasiswa/pendaftar";
+      preLoaderRoute: typeof MahasiswaPendaftarLazyImport;
       parentRoute: typeof rootRoute;
     };
     "/absensi/": {
@@ -172,6 +188,7 @@ declare module "@tanstack/react-router" {
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexLazyRoute;
+  "/mahasiswa/pendaftar": typeof MahasiswaPendaftarLazyRoute;
   "/absensi": typeof AbsensiIndexLazyRoute;
   "/logbook": typeof LogbookIndexLazyRoute;
   "/mahasiswa": typeof MahasiswaIndexLazyRoute;
@@ -184,6 +201,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   "/": typeof IndexLazyRoute;
+  "/mahasiswa/pendaftar": typeof MahasiswaPendaftarLazyRoute;
   "/absensi": typeof AbsensiIndexLazyRoute;
   "/logbook": typeof LogbookIndexLazyRoute;
   "/mahasiswa": typeof MahasiswaIndexLazyRoute;
@@ -197,6 +215,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute;
   "/": typeof IndexLazyRoute;
+  "/mahasiswa/pendaftar": typeof MahasiswaPendaftarLazyRoute;
   "/absensi/": typeof AbsensiIndexLazyRoute;
   "/logbook/": typeof LogbookIndexLazyRoute;
   "/mahasiswa/": typeof MahasiswaIndexLazyRoute;
@@ -211,6 +230,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | "/"
+    | "/mahasiswa/pendaftar"
     | "/absensi"
     | "/logbook"
     | "/mahasiswa"
@@ -222,6 +242,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/"
+    | "/mahasiswa/pendaftar"
     | "/absensi"
     | "/logbook"
     | "/mahasiswa"
@@ -233,6 +254,7 @@ export interface FileRouteTypes {
   id:
     | "__root__"
     | "/"
+    | "/mahasiswa/pendaftar"
     | "/absensi/"
     | "/logbook/"
     | "/mahasiswa/"
@@ -246,6 +268,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute;
+  MahasiswaPendaftarLazyRoute: typeof MahasiswaPendaftarLazyRoute;
   AbsensiIndexLazyRoute: typeof AbsensiIndexLazyRoute;
   LogbookIndexLazyRoute: typeof LogbookIndexLazyRoute;
   MahasiswaIndexLazyRoute: typeof MahasiswaIndexLazyRoute;
@@ -258,6 +281,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  MahasiswaPendaftarLazyRoute: MahasiswaPendaftarLazyRoute,
   AbsensiIndexLazyRoute: AbsensiIndexLazyRoute,
   LogbookIndexLazyRoute: LogbookIndexLazyRoute,
   MahasiswaIndexLazyRoute: MahasiswaIndexLazyRoute,
@@ -279,6 +303,7 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
+        "/mahasiswa/pendaftar",
         "/absensi/",
         "/logbook/",
         "/mahasiswa/",
@@ -291,6 +316,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.lazy.jsx"
+    },
+    "/mahasiswa/pendaftar": {
+      "filePath": "mahasiswa/pendaftar.lazy.jsx"
     },
     "/absensi/": {
       "filePath": "absensi/index.lazy.jsx"
