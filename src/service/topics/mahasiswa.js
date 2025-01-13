@@ -1,7 +1,7 @@
-export const getMahasiswaPendaftar = async () => {
+export const getMahasiswaPendaftar = async (name) => {
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/pendaftar-topic`,
+    `${import.meta.env.VITE_API_URL}/pendaftar-topic?nama=${name}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -17,10 +17,10 @@ export const getMahasiswaPendaftar = async () => {
   return result?.data;
 };
 
-export const getMahasiswaAccepted = async () => {
+export const getMahasiswaAccepted = async (name) => {
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/pendaftar-topic-acc`,
+    `${import.meta.env.VITE_API_URL}/pendaftar-topic-acc?nama=${name}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
