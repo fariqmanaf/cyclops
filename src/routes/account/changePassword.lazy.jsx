@@ -5,7 +5,7 @@ import DataProfile from '@/components/OurComponent/Profile'
 import SidebarMahasiswa from '@/components/OurComponent/Sidebar/Mahasiswa'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
-export const Route = createLazyFileRoute('/account/ChangePassword')({
+export const Route = createLazyFileRoute('/account/changePassword')({
   component: () => (
     <Protected>
       <Password />

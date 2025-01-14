@@ -1,54 +1,52 @@
-import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Eye, EyeOff } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { useMutation } from '@tanstack/react-query';
-import { changePassword } from '@/service/account/changePassword';
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Eye, EyeOff } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { changePassword } from "@/service/account/changePassword";
 
 const ChangePassword = () => {
-
-  
   const [formData, setFormData] = useState({
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: '',
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
 
   const [showPasswords, setShowPasswords] = useState({
     current: false,
     new: false,
-    confirm: false
+    confirm: false,
   });
 
   const changePasswordMutation = useMutation({
     mutationFn: changePassword,
     onSuccess: (data) => {
       toast({
-        title: 'Berhasil',
-        description: 'Password berhasil diubah',
-        variant: 'default',
+        title: "Berhasil",
+        description: "Password berhasil diubah",
+        variant: "default",
       });
       // Reset form
       setFormData({
-        oldPassword: '',
-        newPassword: '',
-        confirmPassword: '',
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
       });
     },
     onError: (error) => {
       toast({
-        title: 'Error',
-        description: error.message + 'GAGAL MERUBAH PASSWORD',
-        variant: 'destructive',
+        title: "Error",
+        description: error.message + "GAGAL MERUBAH PASSWORD",
+        variant: "destructive",
       });
     },
   });
 
   const togglePasswordVisibility = (field) => {
-    setShowPasswords(prev => ({
+    setShowPasswords((prev) => ({
       ...prev,
-      [field]: !prev[field]
+      [field]: !prev[field],
     }));
   };
 
@@ -74,8 +72,10 @@ const ChangePassword = () => {
       <Card className="bg-white shadow-sm">
         <CardContent className="p-6">
           <h1 className="text-xl font-semibold mb-1">Ganti Sandi</h1>
-          <p className="text-sm text-gray-600 mb-1">Silahkan ganti dengan yang baru</p>
-          <hr className='mb-9' />
+          <p className="text-sm text-gray-600 mb-1">
+            Silahkan ganti dengan yang baru
+          </p>
+          <hr className="mb-9" />
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Current Password */}
@@ -96,12 +96,13 @@ const ChangePassword = () => {
                   variant="ghost"
                   size="sm"
                   className="absolute right-0 top-0 h-full px-3"
-                  onClick={() => togglePasswordVisibility('current')}
+                  onClick={() => togglePasswordVisibility("current")}
                 >
-                  {showPasswords.current ? 
-                    <EyeOff className="h-4 w-4 text-gray-500" /> : 
+                  {showPasswords.current ? (
+                    <EyeOff className="h-4 w-4 text-gray-500" />
+                  ) : (
                     <Eye className="h-4 w-4 text-gray-500" />
-                  }
+                  )}
                 </Button>
               </div>
             </div>
@@ -124,12 +125,13 @@ const ChangePassword = () => {
                   variant="ghost"
                   size="sm"
                   className="absolute right-0 top-0 h-full px-3"
-                  onClick={() => togglePasswordVisibility('new')}
+                  onClick={() => togglePasswordVisibility("new")}
                 >
-                  {showPasswords.new ? 
-                    <EyeOff className="h-4 w-4 text-gray-500" /> : 
+                  {showPasswords.new ? (
+                    <EyeOff className="h-4 w-4 text-gray-500" />
+                  ) : (
                     <Eye className="h-4 w-4 text-gray-500" />
-                  }
+                  )}
                 </Button>
               </div>
             </div>
@@ -152,23 +154,24 @@ const ChangePassword = () => {
                   variant="ghost"
                   size="sm"
                   className="absolute right-0 top-0 h-full px-3"
-                  onClick={() => togglePasswordVisibility('confirm')}
+                  onClick={() => togglePasswordVisibility("confirm")}
                 >
-                  {showPasswords.confirm ? 
-                    <EyeOff className="h-4 w-4 text-gray-500" /> : 
+                  {showPasswords.confirm ? (
+                    <EyeOff className="h-4 w-4 text-gray-500" />
+                  ) : (
                     <Eye className="h-4 w-4 text-gray-500" />
-                  }
+                  )}
                 </Button>
               </div>
             </div>
 
             <div className="flex justify-center">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="bg-blue-500 hover:bg-blue-600 text-white px-8"
                 disabled={changePasswordMutation.isPending}
               >
-                {changePasswordMutation.isPending ? 'Memproses...' : 'Selesai'}
+                {changePasswordMutation.isPending ? "Memproses..." : "Selesai"}
               </Button>
             </div>
           </form>
@@ -176,6 +179,6 @@ const ChangePassword = () => {
       </Card>
     </div>
   );
-}
+};
 
 export default ChangePassword;
