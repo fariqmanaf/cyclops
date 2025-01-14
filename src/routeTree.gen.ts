@@ -28,6 +28,13 @@ const AccountDocumentLazyImport = createFileRoute('/account/document')()
 const AccountChangePasswordLazyImport = createFileRoute(
   '/account/ChangePassword',
 )()
+const AccountDosenIndexLazyImport = createFileRoute('/account/dosen/')()
+const AccountDosenEditPasswordLazyImport = createFileRoute(
+  '/account/dosen/EditPassword',
+)()
+const AccountDosenAbsensiMahasiswaLazyImport = createFileRoute(
+  '/account/dosen/AbsensiMahasiswa',
+)()
 
 // Create/Update Routes
 
@@ -91,6 +98,32 @@ const AccountChangePasswordLazyRoute = AccountChangePasswordLazyImport.update({
   import('./routes/account/ChangePassword.lazy').then((d) => d.Route),
 )
 
+const AccountDosenIndexLazyRoute = AccountDosenIndexLazyImport.update({
+  id: '/account/dosen/',
+  path: '/account/dosen/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/account/dosen/index.lazy').then((d) => d.Route),
+)
+
+const AccountDosenEditPasswordLazyRoute =
+  AccountDosenEditPasswordLazyImport.update({
+    id: '/account/dosen/EditPassword',
+    path: '/account/dosen/EditPassword',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/account/dosen/EditPassword.lazy').then((d) => d.Route),
+  )
+
+const AccountDosenAbsensiMahasiswaLazyRoute =
+  AccountDosenAbsensiMahasiswaLazyImport.update({
+    id: '/account/dosen/AbsensiMahasiswa',
+    path: '/account/dosen/AbsensiMahasiswa',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/account/dosen/AbsensiMahasiswa.lazy').then((d) => d.Route),
+  )
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -151,6 +184,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TopicsIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/account/dosen/AbsensiMahasiswa': {
+      id: '/account/dosen/AbsensiMahasiswa'
+      path: '/account/dosen/AbsensiMahasiswa'
+      fullPath: '/account/dosen/AbsensiMahasiswa'
+      preLoaderRoute: typeof AccountDosenAbsensiMahasiswaLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/dosen/EditPassword': {
+      id: '/account/dosen/EditPassword'
+      path: '/account/dosen/EditPassword'
+      fullPath: '/account/dosen/EditPassword'
+      preLoaderRoute: typeof AccountDosenEditPasswordLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/dosen/': {
+      id: '/account/dosen/'
+      path: '/account/dosen'
+      fullPath: '/account/dosen'
+      preLoaderRoute: typeof AccountDosenIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -165,6 +219,9 @@ export interface FileRoutesByFullPath {
   '/account': typeof AccountIndexLazyRoute
   '/notification': typeof NotificationIndexLazyRoute
   '/topics': typeof TopicsIndexLazyRoute
+  '/account/dosen/AbsensiMahasiswa': typeof AccountDosenAbsensiMahasiswaLazyRoute
+  '/account/dosen/EditPassword': typeof AccountDosenEditPasswordLazyRoute
+  '/account/dosen': typeof AccountDosenIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -176,6 +233,9 @@ export interface FileRoutesByTo {
   '/account': typeof AccountIndexLazyRoute
   '/notification': typeof NotificationIndexLazyRoute
   '/topics': typeof TopicsIndexLazyRoute
+  '/account/dosen/AbsensiMahasiswa': typeof AccountDosenAbsensiMahasiswaLazyRoute
+  '/account/dosen/EditPassword': typeof AccountDosenEditPasswordLazyRoute
+  '/account/dosen': typeof AccountDosenIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -188,6 +248,9 @@ export interface FileRoutesById {
   '/account/': typeof AccountIndexLazyRoute
   '/notification/': typeof NotificationIndexLazyRoute
   '/topics/': typeof TopicsIndexLazyRoute
+  '/account/dosen/AbsensiMahasiswa': typeof AccountDosenAbsensiMahasiswaLazyRoute
+  '/account/dosen/EditPassword': typeof AccountDosenEditPasswordLazyRoute
+  '/account/dosen/': typeof AccountDosenIndexLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -201,6 +264,9 @@ export interface FileRouteTypes {
     | '/account'
     | '/notification'
     | '/topics'
+    | '/account/dosen/AbsensiMahasiswa'
+    | '/account/dosen/EditPassword'
+    | '/account/dosen'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -211,6 +277,9 @@ export interface FileRouteTypes {
     | '/account'
     | '/notification'
     | '/topics'
+    | '/account/dosen/AbsensiMahasiswa'
+    | '/account/dosen/EditPassword'
+    | '/account/dosen'
   id:
     | '__root__'
     | '/'
@@ -221,6 +290,9 @@ export interface FileRouteTypes {
     | '/account/'
     | '/notification/'
     | '/topics/'
+    | '/account/dosen/AbsensiMahasiswa'
+    | '/account/dosen/EditPassword'
+    | '/account/dosen/'
   fileRoutesById: FileRoutesById
 }
 
@@ -233,6 +305,9 @@ export interface RootRouteChildren {
   AccountIndexLazyRoute: typeof AccountIndexLazyRoute
   NotificationIndexLazyRoute: typeof NotificationIndexLazyRoute
   TopicsIndexLazyRoute: typeof TopicsIndexLazyRoute
+  AccountDosenAbsensiMahasiswaLazyRoute: typeof AccountDosenAbsensiMahasiswaLazyRoute
+  AccountDosenEditPasswordLazyRoute: typeof AccountDosenEditPasswordLazyRoute
+  AccountDosenIndexLazyRoute: typeof AccountDosenIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -244,6 +319,9 @@ const rootRouteChildren: RootRouteChildren = {
   AccountIndexLazyRoute: AccountIndexLazyRoute,
   NotificationIndexLazyRoute: NotificationIndexLazyRoute,
   TopicsIndexLazyRoute: TopicsIndexLazyRoute,
+  AccountDosenAbsensiMahasiswaLazyRoute: AccountDosenAbsensiMahasiswaLazyRoute,
+  AccountDosenEditPasswordLazyRoute: AccountDosenEditPasswordLazyRoute,
+  AccountDosenIndexLazyRoute: AccountDosenIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -263,7 +341,10 @@ export const routeTree = rootRoute
         "/account/logbookprogress",
         "/account/",
         "/notification/",
-        "/topics/"
+        "/topics/",
+        "/account/dosen/AbsensiMahasiswa",
+        "/account/dosen/EditPassword",
+        "/account/dosen/"
       ]
     },
     "/": {
@@ -289,6 +370,15 @@ export const routeTree = rootRoute
     },
     "/topics/": {
       "filePath": "topics/index.lazy.jsx"
+    },
+    "/account/dosen/AbsensiMahasiswa": {
+      "filePath": "account/dosen/AbsensiMahasiswa.lazy.jsx"
+    },
+    "/account/dosen/EditPassword": {
+      "filePath": "account/dosen/EditPassword.lazy.jsx"
+    },
+    "/account/dosen/": {
+      "filePath": "account/dosen/index.lazy.jsx"
     }
   }
 }

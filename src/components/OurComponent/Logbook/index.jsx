@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FileText } from 'lucide-react';
 
 
+
 const Logbook = () => {
     const weeks = Array.from({ length: 6 }, (_, i) => ({
         id: `minggu-${i + 1}`,

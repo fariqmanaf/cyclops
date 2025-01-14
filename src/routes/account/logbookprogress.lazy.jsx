@@ -16,7 +16,7 @@ function ProgressLogbook() {
   return (
     <>
         <Navbar isAuth={true}/>
-        <LogbookProgress />
+        <LogbookProgress logbookId={"logbook2"} />
     </>
   )
 }

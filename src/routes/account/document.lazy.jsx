@@ -28,6 +28,7 @@ export const Route = createLazyFileRoute('/account/document')({
 })
 
 function DocumentView() {
+
   return (
     <>
         <Navbar isAuth={true} />

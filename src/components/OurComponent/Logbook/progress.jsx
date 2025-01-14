@@ -4,30 +4,34 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useMutation } from '@tanstack/react-query';
+import { createLogbookDetail, createLogbookFormData } from '@/service/account/createLogbook';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
-const LogbookProgress = () => {
-
-    const mutation = useMutation({
-        mutationFn: async (formData) => {
-          // Replace with your API endpoint
-          const response = await fetch('/api/progress', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-          return response.json();
-        },
+const LogbookProgress = ({logbookId}) => {
+  const mutation = useMutation({
+    mutationFn: async (formData) => {
+      const logbookFormData = createLogbookFormData({
+        namaDosen: formData.get('namaDosen'),
+        target: formData.get('target'),
+        rincianKegiatan: formData.get('rincianKegiatan'),
+        kendala: formData.get('kendala'),
+        output: formData.get('output'),
+        buktiKegiatan: formData.get('buktiKegiatan'),
       });
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-        mutation.mutate(data);
-      };
-    
+
+      console.log(logbookFormData);
+      
+      return createLogbookDetail(logbookId, logbookFormData);
+    }
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    mutation.mutate(formData);
+    console.log(formData);
+  };
+
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
       <div className="mb-4">
@@ -36,6 +40,14 @@ const LogbookProgress = () => {
 
       <Card>
         <CardContent className="pt-6">
+          {mutation.isError && (
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>
+                {mutation.error?.message || 'Terjadi kesalahan saat mengirim data'}
+              </AlertDescription>
+            </Alert>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
@@ -77,7 +89,7 @@ const LogbookProgress = () => {
                   id="buktiKegiatan" 
                   name="buktiKegiatan" 
                   type="file" 
-                  className="mt-1" 
+                  className="mt-1 cursor-pointer" 
                   required 
                 />
               </div>
@@ -96,8 +108,11 @@ const LogbookProgress = () => {
               >
                 Kembali
               </Button>
-              <Button type="submit">
-                Selesai
+              <Button 
+                type="submit"
+                disabled={mutation.isPending}
+              >
+                {mutation.isPending ? 'Mengirim...' : 'Selesai'}
               </Button>
             </div>
           </form>
@@ -105,6 +120,7 @@ const LogbookProgress = () => {
       </Card>
     </div>
   );
-}
+};
+
 
 export default LogbookProgress;
