@@ -1,11 +1,17 @@
+import { Protected } from '@/components/OurComponent/AuthMiddleware'
 import ChangePasswordDosen from '@/components/OurComponent/ChangePassword/dosen'
 import Navbar from '@/components/OurComponent/Navbar'
 import DataProfileDosen from '@/components/OurComponent/Profile/ProfileDosen'
 import SidebarDosen from '@/components/OurComponent/Sidebar/Dosen'
 import { createLazyFileRoute } from '@tanstack/react-router'
+import { Protected } from '@/components/OurComponent/AuthMiddleware'
 
 export const Route = createLazyFileRoute('/account/dosen/EditPassword')({
-  component: PasswordDosen,
+  component: () => (
+    <Protected roles={['dosen']}>
+      <PasswordDosen />
+    </Protected>
+  ),
 })
 
 function PasswordDosen() {

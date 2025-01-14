@@ -7,7 +7,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/account/changePassword')({
   component: () => (
-    <Protected>
+    <Protected roles={['mahasiswa']}>
       <Password />
     </Protected>
   ),

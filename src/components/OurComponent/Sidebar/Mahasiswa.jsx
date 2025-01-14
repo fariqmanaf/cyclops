@@ -2,10 +2,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { UserCircle2, FileText, Lock, BookOpen, LogOut } from 'lucide-react';
 import { useNavigate, useMatch, useLocation } from "@tanstack/react-router";
+import { useDispatch } from 'react-redux';
+import toast from "react-hot-toast";
+import { setToken, setUser } from '@/redux/slices/auth';
 
 const SidebarMahasiswa = () => {
   const navigate = useNavigate()
   const match = useLocation()
+  const dispatch = useDispatch()
 
     const menuItems = [
         {

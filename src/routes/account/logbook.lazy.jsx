@@ -7,7 +7,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/account/logbook')({
   component: () => (
-    <Protected>
+    <Protected roles={['mahasiswa']}>
       <LogbookView/>
     </Protected>
   ),

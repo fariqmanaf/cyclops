@@ -2,19 +2,23 @@ import { Lock, LogOut, UserCircle2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate, useLocation } from "@tanstack/react-router";
+import { setToken } from '@/redux/slices/auth';
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 
 const SidebarDosen = () => {
     const navigate = useNavigate();
     const match = useLocation();
+    const dispatch = useDispatch();
 
     const menuItems = [
         {
           icon: <UserCircle2 className="w-5 h-5" />,
           label: 'Profil',
-          link: '/account',
+          link: '/account/dosen',
         },
-        { icon: <Lock className="w-5 h-5" />, label: 'Ganti Sandi', link: '/account/changePassword' },
-        { icon: <LogOut className="w-5 h-5" />, label: 'Keluar' },
+        { icon: <Lock className="w-5 h-5" />, label: 'Ganti Sandi', link: '/account/dosen/EditPassword' },
+        { icon: <LogOut className="w-5 h-5" />, label: 'Keluar', },
       ]
 
   return (

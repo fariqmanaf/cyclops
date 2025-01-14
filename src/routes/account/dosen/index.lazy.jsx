@@ -5,9 +5,20 @@ import { MoreVertical } from 'lucide-react'
 import Navbar from '@/components/OurComponent/Navbar'
 import DataProfileDosen from '@/components/OurComponent/Profile/ProfileDosen'
 import SidebarDosen from '@/components/OurComponent/Sidebar/Dosen'
+import { Button } from '@/components/ui/button'
+import { useReactTable } from '@tanstack/react-table'
+import { Table, TableBody, TableCell, TableHeader, TableHead, TableRow } from '@/components/ui/table'
+import { flexRender, getCoreRowModel } from '@tanstack/react-table'
+import { getProfile } from '@/service/account/userAccount'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Protected } from '@/components/OurComponent/AuthMiddleware'
 
 export const Route = createLazyFileRoute('/account/dosen/')({
-  component: ProfileDosen,
+  component: () => (
+    <Protected roles={['dosen']}>
+      <ProfileDosen />
+    </Protected>
+  ),
 })
 
 function ProfileDosen() {

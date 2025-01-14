@@ -32,7 +32,7 @@ import { useMemo } from 'react'
 
 export const Route = createLazyFileRoute('/account/')({
   component: () => (
-    <Protected>
+    <Protected roles={['mahasiswa']}>
       <Profile />
     </Protected>
   ),

@@ -5,7 +5,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/account/logbookprogress')({
   component: () => (
-    <Protected>
+    <Protected roles={['mahasiswa']}>
       <ProgressLogbook/>
     </Protected>
   ),
@@ -16,7 +16,7 @@ function ProgressLogbook() {
   return (
     <>
         <Navbar isAuth={true}/>
-        <LogbookProgress logbookId={"logbook2"} />
+        <LogbookProgress logbookId={"logbook1"} />
     </>
   )
 }

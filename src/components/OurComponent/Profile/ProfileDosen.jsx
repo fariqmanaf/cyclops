@@ -1,3 +1,9 @@
+import React, { useState, useEffect } from 'react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Card, CardContent } from '@/components/ui/card';
+import { getProfile } from '@/service/account/userAccount';
+
+
 const DataProfileDosen = () => {
     const [profile, setProfile] = useState({
       name: '',
