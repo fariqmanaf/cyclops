@@ -664,7 +664,11 @@ const rootRouteChildren: RootRouteChildren = {
   AccountDocumentLazyRoute: AccountDocumentLazyRoute,
   AccountLogbookLazyRoute: AccountLogbookLazyRoute,
   AccountLogbookprogressLazyRoute: AccountLogbookprogressLazyRoute,
+  MahasiswaPendaftarLazyRoute: MahasiswaPendaftarLazyRoute,
+  AbsensiIndexLazyRoute: AbsensiIndexLazyRoute,
   AccountIndexLazyRoute: AccountIndexLazyRoute,
+  LogbookIndexLazyRoute: LogbookIndexLazyRoute,
+  MahasiswaIndexLazyRoute: MahasiswaIndexLazyRoute,
   NotificationIndexLazyRoute: NotificationIndexLazyRoute,
   TopicsIndexLazyRoute: TopicsIndexLazyRoute,
   DosenTopicsTopicIdLazyRoute: DosenTopicsTopicIdLazyRoute,
@@ -688,6 +692,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/account/changePassword",
+        "/account/changePassword",
         "/account/document",
         "/account/logbook",
         "/account/logbookprogress",
@@ -700,7 +705,11 @@ export const routeTree = rootRoute
         "/account/document",
         "/account/logbook",
         "/account/logbookprogress",
+        "/mahasiswa/pendaftar",
+        "/absensi/",
         "/account/",
+        "/logbook/",
+        "/mahasiswa/",
         "/notification/",
         "/topics/",
         "/dosen/topics/$topicId",
@@ -715,6 +724,8 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.lazy.jsx"
     },
+    "/account/changePassword": {
+      "filePath": "account/changePassword.lazy.jsx"
     "/account/changePassword": {
       "filePath": "account/changePassword.lazy.jsx"
     },
@@ -754,8 +765,20 @@ export const routeTree = rootRoute
     "/account/logbookprogress": {
       "filePath": "account/logbookprogress.lazy.jsx"
     },
+    "/mahasiswa/pendaftar": {
+      "filePath": "mahasiswa/pendaftar.lazy.jsx"
+    },
+    "/absensi/": {
+      "filePath": "absensi/index.lazy.jsx"
+    },
     "/account/": {
       "filePath": "account/index.lazy.jsx"
+    },
+    "/logbook/": {
+      "filePath": "logbook/index.lazy.jsx"
+    },
+    "/mahasiswa/": {
+      "filePath": "mahasiswa/index.lazy.jsx"
     },
     "/notification/": {
       "filePath": "notification/index.lazy.jsx"
