@@ -19,7 +19,7 @@ const DataDokumen = () => {
     dropMatakuliah: "",
     jumlahMatakuliah: "",
   });
-  const { toast } = useToaster();
+  const  toast  = useToaster();
   const [isEditing, setIsEditing] = useState(false);
   const [files, setFiles] = useState({});
 
@@ -132,6 +132,123 @@ const DataDokumen = () => {
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-2xl font-bold">
                 {isEditing ? "Edit Documents" : "Upload Documents"}
+              </h1>
+              {isEditing && (
+                <Button variant="outline" onClick={() => setIsEditing(false)}>
+                  Cancel
+                </Button>
+              )}
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {dataDocuments.map((doc) => (
+                <div key={doc.id} className="space-y-1">
+                  <h2 className="text-xl font-medium">{doc.title}</h2>
+                  <p className="text-xs text-gray-500">{doc.description}</p>
+                  {documents && documents[doc.id] && (
+                    <p className="text-xs">
+                      Current file:{" "}
+                      <span
+                        className=" text-blue-600 cursor-pointer"
+                        onClick={() => openNewTab(documents[doc.id])}
+                      >
+                        Klik Untuk Lihat
+                      </span>
+                    </p>
+                  )}
+                  <div className="border border-solid border-gray-300 rounded-lg p-6">
+                    <div className="flex flex-col space-y-2">
+                      <div className="flex justify-end">
+                        <Input
+                          type="file"
+                          accept=".pdf"
+                          onChange={(e) => handleFileChange(e, doc.id)}
+                          className="text-xs w-28"
+                        />
+                      </div>
+                      {files[doc.id] && (
+                        <p className="text-xs text-green-600 text-right">
+                          File terpilih: {files[doc.id].name}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <div className="space-y-6">
+                <div className="space-y-1">
+                  <h2 className="text-xl font-medium">Drop Mata Kuliah</h2>
+                  <p className="text-xs text-gray-500">
+                    Tuliskan Mata Kuliah yang ingin di Drop
+                  </p>
+                  <Textarea
+                    value={formInputs.dropMatakuliah}
+                    onChange={(e) =>
+                      setFormInputs((prev) => ({
+                        ...prev,
+                        dropMatakuliah: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <h2 className="text-xl font-medium">Jumlah Konversi SKS</h2>
+                  <p className="text-xs text-gray-500">
+                    Maksimal 20 SKS (Tulis dalam Angka)
+                  </p>
+                  <Textarea
+                    value={formInputs.jumlahMatakuliah}
+                    onChange={(e) =>
+                      setFormInputs((prev) => ({
+                        ...prev,
+                        jumlahMatakuliah: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+              </div>
+
+              {uploadMutation.isError && (
+                <Alert variant="destructive">
+                  <AlertDescription>
+                    {uploadMutation.error.message}
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              <div className="flex justify-end mt-6">
+                <Button
+                  type="submit"
+                  className="w-32"
+                  disabled={uploadMutation.isPending}
+                >
+                  {uploadMutation.isPending ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Menyimpan...
+                    </>
+                  ) : (
+                    "Simpan"
+                  )}
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!documents) {
+    return (
+      <div className="min-h-screen p-4">
+        <Card className="mx-auto w-[80vw] md:w-[60vw]">
+          <CardContent className="p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-2xl font-bold">
+                {isEditing ? "Edit Documents" : "Lengkapi Dokumen"}
               </h1>
               {isEditing && (
                 <Button variant="outline" onClick={() => setIsEditing(false)}>

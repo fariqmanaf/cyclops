@@ -1,6 +1,6 @@
-export const createLogbookDetail = async (logbookId, formData) => {
+export const createLogbookDetail = async (id, formData) => {
     const token = localStorage.getItem('token');
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/logbook/${logbookId}/create`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/logbook/${id}/create`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,

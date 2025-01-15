@@ -8,466 +8,457 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
+import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
-const LogoutLazyImport = createFileRoute("/logout")();
-const IndexLazyImport = createFileRoute("/")();
-const TopicsIndexLazyImport = createFileRoute("/topics/")();
-const NotificationIndexLazyImport = createFileRoute("/notification/")();
-const MahasiswaIndexLazyImport = createFileRoute("/mahasiswa/")();
-const LogbookIndexLazyImport = createFileRoute("/logbook/")();
-const AccountIndexLazyImport = createFileRoute("/account/")();
-const AbsensiIndexLazyImport = createFileRoute("/absensi/")();
-const MahasiswaPendaftarLazyImport = createFileRoute("/mahasiswa/pendaftar")();
-const AccountLogbookprogressLazyImport = createFileRoute(
-  "/account/logbookprogress",
-)();
-const AccountLogbookLazyImport = createFileRoute("/account/logbook")();
-const AccountDocumentLazyImport = createFileRoute("/account/document")();
+const LogoutLazyImport = createFileRoute('/logout')()
+const IndexLazyImport = createFileRoute('/')()
+const TopicsIndexLazyImport = createFileRoute('/topics/')()
+const NotificationIndexLazyImport = createFileRoute('/notification/')()
+const MahasiswaIndexLazyImport = createFileRoute('/mahasiswa/')()
+const LogbookIndexLazyImport = createFileRoute('/logbook/')()
+const AccountIndexLazyImport = createFileRoute('/account/')()
+const AbsensiIndexLazyImport = createFileRoute('/absensi/')()
+const MahasiswaPendaftarLazyImport = createFileRoute('/mahasiswa/pendaftar')()
+const AccountDocumentLazyImport = createFileRoute('/account/document')()
 const AccountChangePasswordLazyImport = createFileRoute(
-  "/account/changePassword",
-)();
-const DosenTopicsIndexLazyImport = createFileRoute("/dosen/topics/")();
-const AccountDosenIndexLazyImport = createFileRoute("/account/dosen/")();
-const DosenTopicsCreateLazyImport = createFileRoute("/dosen/topics/create")();
-const DosenTopicsTopicIdLazyImport = createFileRoute(
-  "/dosen/topics/$topicId",
-)();
+  '/account/changePassword',
+)()
+const DosenTopicsIndexLazyImport = createFileRoute('/dosen/topics/')()
+const AccountLogbookIndexLazyImport = createFileRoute('/account/logbook/')()
+const AccountDosenIndexLazyImport = createFileRoute('/account/dosen/')()
+const DosenTopicsCreateLazyImport = createFileRoute('/dosen/topics/create')()
+const DosenTopicsTopicIdLazyImport = createFileRoute('/dosen/topics/$topicId')()
+const AccountLogbookLogbookIdLazyImport = createFileRoute(
+  '/account/logbook/$logbookId',
+)()
 const AccountDosenEditPasswordLazyImport = createFileRoute(
-  "/account/dosen/EditPassword",
-)();
+  '/account/dosen/EditPassword',
+)()
 
 // Create/Update Routes
 
 const LogoutLazyRoute = LogoutLazyImport.update({
-  id: "/logout",
-  path: "/logout",
+  id: '/logout',
+  path: '/logout',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import("./routes/logout.lazy").then((d) => d.Route));
+} as any).lazy(() => import('./routes/logout.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import("./routes/index.lazy").then((d) => d.Route));
+} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
 const TopicsIndexLazyRoute = TopicsIndexLazyImport.update({
-  id: "/topics/",
-  path: "/topics/",
+  id: '/topics/',
+  path: '/topics/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import("./routes/topics/index.lazy").then((d) => d.Route));
+} as any).lazy(() => import('./routes/topics/index.lazy').then((d) => d.Route))
 
 const NotificationIndexLazyRoute = NotificationIndexLazyImport.update({
-  id: "/notification/",
-  path: "/notification/",
+  id: '/notification/',
+  path: '/notification/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import("./routes/notification/index.lazy").then((d) => d.Route),
-);
+  import('./routes/notification/index.lazy').then((d) => d.Route),
+)
 
 const MahasiswaIndexLazyRoute = MahasiswaIndexLazyImport.update({
-  id: "/mahasiswa/",
-  path: "/mahasiswa/",
+  id: '/mahasiswa/',
+  path: '/mahasiswa/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import("./routes/mahasiswa/index.lazy").then((d) => d.Route),
-);
+  import('./routes/mahasiswa/index.lazy').then((d) => d.Route),
+)
 
 const LogbookIndexLazyRoute = LogbookIndexLazyImport.update({
-  id: "/logbook/",
-  path: "/logbook/",
+  id: '/logbook/',
+  path: '/logbook/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import("./routes/logbook/index.lazy").then((d) => d.Route),
-);
+} as any).lazy(() => import('./routes/logbook/index.lazy').then((d) => d.Route))
 
 const AccountIndexLazyRoute = AccountIndexLazyImport.update({
-  id: "/account/",
-  path: "/account/",
+  id: '/account/',
+  path: '/account/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import("./routes/account/index.lazy").then((d) => d.Route),
-);
+} as any).lazy(() => import('./routes/account/index.lazy').then((d) => d.Route))
 
 const AbsensiIndexLazyRoute = AbsensiIndexLazyImport.update({
-  id: "/absensi/",
-  path: "/absensi/",
+  id: '/absensi/',
+  path: '/absensi/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import("./routes/absensi/index.lazy").then((d) => d.Route),
-);
+} as any).lazy(() => import('./routes/absensi/index.lazy').then((d) => d.Route))
 
 const MahasiswaPendaftarLazyRoute = MahasiswaPendaftarLazyImport.update({
-  id: "/mahasiswa/pendaftar",
-  path: "/mahasiswa/pendaftar",
+  id: '/mahasiswa/pendaftar',
+  path: '/mahasiswa/pendaftar',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import("./routes/mahasiswa/pendaftar.lazy").then((d) => d.Route),
-);
-
-const AccountLogbookprogressLazyRoute = AccountLogbookprogressLazyImport.update(
-  {
-    id: "/account/logbookprogress",
-    path: "/account/logbookprogress",
-    getParentRoute: () => rootRoute,
-  } as any,
-).lazy(() =>
-  import("./routes/account/logbookprogress.lazy").then((d) => d.Route),
-);
-
-const AccountLogbookLazyRoute = AccountLogbookLazyImport.update({
-  id: "/account/logbook",
-  path: "/account/logbook",
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import("./routes/account/logbook.lazy").then((d) => d.Route),
-);
+  import('./routes/mahasiswa/pendaftar.lazy').then((d) => d.Route),
+)
 
 const AccountDocumentLazyRoute = AccountDocumentLazyImport.update({
-  id: "/account/document",
-  path: "/account/document",
+  id: '/account/document',
+  path: '/account/document',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import("./routes/account/document.lazy").then((d) => d.Route),
-);
+  import('./routes/account/document.lazy').then((d) => d.Route),
+)
 
 const AccountChangePasswordLazyRoute = AccountChangePasswordLazyImport.update({
-  id: "/account/changePassword",
-  path: "/account/changePassword",
+  id: '/account/changePassword',
+  path: '/account/changePassword',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import("./routes/account/changePassword.lazy").then((d) => d.Route),
-);
+  import('./routes/account/changePassword.lazy').then((d) => d.Route),
+)
 
 const DosenTopicsIndexLazyRoute = DosenTopicsIndexLazyImport.update({
-  id: "/dosen/topics/",
-  path: "/dosen/topics/",
+  id: '/dosen/topics/',
+  path: '/dosen/topics/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import("./routes/dosen/topics/index.lazy").then((d) => d.Route),
-);
+  import('./routes/dosen/topics/index.lazy').then((d) => d.Route),
+)
+
+const AccountLogbookIndexLazyRoute = AccountLogbookIndexLazyImport.update({
+  id: '/account/logbook/',
+  path: '/account/logbook/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/account/logbook/index.lazy').then((d) => d.Route),
+)
 
 const AccountDosenIndexLazyRoute = AccountDosenIndexLazyImport.update({
-  id: "/account/dosen/",
-  path: "/account/dosen/",
+  id: '/account/dosen/',
+  path: '/account/dosen/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import("./routes/account/dosen/index.lazy").then((d) => d.Route),
-);
+  import('./routes/account/dosen/index.lazy').then((d) => d.Route),
+)
 
 const DosenTopicsCreateLazyRoute = DosenTopicsCreateLazyImport.update({
-  id: "/dosen/topics/create",
-  path: "/dosen/topics/create",
+  id: '/dosen/topics/create',
+  path: '/dosen/topics/create',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import("./routes/dosen/topics/create.lazy").then((d) => d.Route),
-);
+  import('./routes/dosen/topics/create.lazy').then((d) => d.Route),
+)
 
 const DosenTopicsTopicIdLazyRoute = DosenTopicsTopicIdLazyImport.update({
-  id: "/dosen/topics/$topicId",
-  path: "/dosen/topics/$topicId",
+  id: '/dosen/topics/$topicId',
+  path: '/dosen/topics/$topicId',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import("./routes/dosen/topics/$topicId.lazy").then((d) => d.Route),
-);
+  import('./routes/dosen/topics/$topicId.lazy').then((d) => d.Route),
+)
+
+const AccountLogbookLogbookIdLazyRoute =
+  AccountLogbookLogbookIdLazyImport.update({
+    id: '/account/logbook/$logbookId',
+    path: '/account/logbook/$logbookId',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/account/logbook/$logbookId.lazy').then((d) => d.Route),
+  )
 
 const AccountDosenEditPasswordLazyRoute =
   AccountDosenEditPasswordLazyImport.update({
-    id: "/account/dosen/EditPassword",
-    path: "/account/dosen/EditPassword",
+    id: '/account/dosen/EditPassword',
+    path: '/account/dosen/EditPassword',
     getParentRoute: () => rootRoute,
   } as any).lazy(() =>
-    import("./routes/account/dosen/EditPassword.lazy").then((d) => d.Route),
-  );
+    import('./routes/account/dosen/EditPassword.lazy').then((d) => d.Route),
+  )
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/logout": {
-      id: "/logout";
-      path: "/logout";
-      fullPath: "/logout";
-      preLoaderRoute: typeof LogoutLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/account/changePassword": {
-      id: "/account/changePassword";
-      path: "/account/changePassword";
-      fullPath: "/account/changePassword";
-      preLoaderRoute: typeof AccountChangePasswordLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/account/document": {
-      id: "/account/document";
-      path: "/account/document";
-      fullPath: "/account/document";
-      preLoaderRoute: typeof AccountDocumentLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/account/logbook": {
-      id: "/account/logbook";
-      path: "/account/logbook";
-      fullPath: "/account/logbook";
-      preLoaderRoute: typeof AccountLogbookLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/account/logbookprogress": {
-      id: "/account/logbookprogress";
-      path: "/account/logbookprogress";
-      fullPath: "/account/logbookprogress";
-      preLoaderRoute: typeof AccountLogbookprogressLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/mahasiswa/pendaftar": {
-      id: "/mahasiswa/pendaftar";
-      path: "/mahasiswa/pendaftar";
-      fullPath: "/mahasiswa/pendaftar";
-      preLoaderRoute: typeof MahasiswaPendaftarLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/absensi/": {
-      id: "/absensi/";
-      path: "/absensi";
-      fullPath: "/absensi";
-      preLoaderRoute: typeof AbsensiIndexLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/account/": {
-      id: "/account/";
-      path: "/account";
-      fullPath: "/account";
-      preLoaderRoute: typeof AccountIndexLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/logbook/": {
-      id: "/logbook/";
-      path: "/logbook";
-      fullPath: "/logbook";
-      preLoaderRoute: typeof LogbookIndexLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/mahasiswa/": {
-      id: "/mahasiswa/";
-      path: "/mahasiswa";
-      fullPath: "/mahasiswa";
-      preLoaderRoute: typeof MahasiswaIndexLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/notification/": {
-      id: "/notification/";
-      path: "/notification";
-      fullPath: "/notification";
-      preLoaderRoute: typeof NotificationIndexLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/topics/": {
-      id: "/topics/";
-      path: "/topics";
-      fullPath: "/topics";
-      preLoaderRoute: typeof TopicsIndexLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/account/dosen/EditPassword": {
-      id: "/account/dosen/EditPassword";
-      path: "/account/dosen/EditPassword";
-      fullPath: "/account/dosen/EditPassword";
-      preLoaderRoute: typeof AccountDosenEditPasswordLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/dosen/topics/$topicId": {
-      id: "/dosen/topics/$topicId";
-      path: "/dosen/topics/$topicId";
-      fullPath: "/dosen/topics/$topicId";
-      preLoaderRoute: typeof DosenTopicsTopicIdLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/dosen/topics/create": {
-      id: "/dosen/topics/create";
-      path: "/dosen/topics/create";
-      fullPath: "/dosen/topics/create";
-      preLoaderRoute: typeof DosenTopicsCreateLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/account/dosen/": {
-      id: "/account/dosen/";
-      path: "/account/dosen";
-      fullPath: "/account/dosen";
-      preLoaderRoute: typeof AccountDosenIndexLazyImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/dosen/topics/": {
-      id: "/dosen/topics/";
-      path: "/dosen/topics";
-      fullPath: "/dosen/topics";
-      preLoaderRoute: typeof DosenTopicsIndexLazyImport;
-      parentRoute: typeof rootRoute;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/logout': {
+      id: '/logout'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof LogoutLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/changePassword': {
+      id: '/account/changePassword'
+      path: '/account/changePassword'
+      fullPath: '/account/changePassword'
+      preLoaderRoute: typeof AccountChangePasswordLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/document': {
+      id: '/account/document'
+      path: '/account/document'
+      fullPath: '/account/document'
+      preLoaderRoute: typeof AccountDocumentLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/mahasiswa/pendaftar': {
+      id: '/mahasiswa/pendaftar'
+      path: '/mahasiswa/pendaftar'
+      fullPath: '/mahasiswa/pendaftar'
+      preLoaderRoute: typeof MahasiswaPendaftarLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/absensi/': {
+      id: '/absensi/'
+      path: '/absensi'
+      fullPath: '/absensi'
+      preLoaderRoute: typeof AbsensiIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/': {
+      id: '/account/'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/logbook/': {
+      id: '/logbook/'
+      path: '/logbook'
+      fullPath: '/logbook'
+      preLoaderRoute: typeof LogbookIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/mahasiswa/': {
+      id: '/mahasiswa/'
+      path: '/mahasiswa'
+      fullPath: '/mahasiswa'
+      preLoaderRoute: typeof MahasiswaIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/notification/': {
+      id: '/notification/'
+      path: '/notification'
+      fullPath: '/notification'
+      preLoaderRoute: typeof NotificationIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/topics/': {
+      id: '/topics/'
+      path: '/topics'
+      fullPath: '/topics'
+      preLoaderRoute: typeof TopicsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/dosen/EditPassword': {
+      id: '/account/dosen/EditPassword'
+      path: '/account/dosen/EditPassword'
+      fullPath: '/account/dosen/EditPassword'
+      preLoaderRoute: typeof AccountDosenEditPasswordLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/logbook/$logbookId': {
+      id: '/account/logbook/$logbookId'
+      path: '/account/logbook/$logbookId'
+      fullPath: '/account/logbook/$logbookId'
+      preLoaderRoute: typeof AccountLogbookLogbookIdLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dosen/topics/$topicId': {
+      id: '/dosen/topics/$topicId'
+      path: '/dosen/topics/$topicId'
+      fullPath: '/dosen/topics/$topicId'
+      preLoaderRoute: typeof DosenTopicsTopicIdLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dosen/topics/create': {
+      id: '/dosen/topics/create'
+      path: '/dosen/topics/create'
+      fullPath: '/dosen/topics/create'
+      preLoaderRoute: typeof DosenTopicsCreateLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/dosen/': {
+      id: '/account/dosen/'
+      path: '/account/dosen'
+      fullPath: '/account/dosen'
+      preLoaderRoute: typeof AccountDosenIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/logbook/': {
+      id: '/account/logbook/'
+      path: '/account/logbook'
+      fullPath: '/account/logbook'
+      preLoaderRoute: typeof AccountLogbookIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dosen/topics/': {
+      id: '/dosen/topics/'
+      path: '/dosen/topics'
+      fullPath: '/dosen/topics'
+      preLoaderRoute: typeof DosenTopicsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexLazyRoute;
-  "/logout": typeof LogoutLazyRoute;
-  "/account/changePassword": typeof AccountChangePasswordLazyRoute;
-  "/account/document": typeof AccountDocumentLazyRoute;
-  "/account/logbook": typeof AccountLogbookLazyRoute;
-  "/account/logbookprogress": typeof AccountLogbookprogressLazyRoute;
-  "/mahasiswa/pendaftar": typeof MahasiswaPendaftarLazyRoute;
-  "/absensi": typeof AbsensiIndexLazyRoute;
-  "/account": typeof AccountIndexLazyRoute;
-  "/logbook": typeof LogbookIndexLazyRoute;
-  "/mahasiswa": typeof MahasiswaIndexLazyRoute;
-  "/notification": typeof NotificationIndexLazyRoute;
-  "/topics": typeof TopicsIndexLazyRoute;
-  "/account/dosen/EditPassword": typeof AccountDosenEditPasswordLazyRoute;
-  "/dosen/topics/$topicId": typeof DosenTopicsTopicIdLazyRoute;
-  "/dosen/topics/create": typeof DosenTopicsCreateLazyRoute;
-  "/account/dosen": typeof AccountDosenIndexLazyRoute;
-  "/dosen/topics": typeof DosenTopicsIndexLazyRoute;
+  '/': typeof IndexLazyRoute
+  '/logout': typeof LogoutLazyRoute
+  '/account/changePassword': typeof AccountChangePasswordLazyRoute
+  '/account/document': typeof AccountDocumentLazyRoute
+  '/mahasiswa/pendaftar': typeof MahasiswaPendaftarLazyRoute
+  '/absensi': typeof AbsensiIndexLazyRoute
+  '/account': typeof AccountIndexLazyRoute
+  '/logbook': typeof LogbookIndexLazyRoute
+  '/mahasiswa': typeof MahasiswaIndexLazyRoute
+  '/notification': typeof NotificationIndexLazyRoute
+  '/topics': typeof TopicsIndexLazyRoute
+  '/account/dosen/EditPassword': typeof AccountDosenEditPasswordLazyRoute
+  '/account/logbook/$logbookId': typeof AccountLogbookLogbookIdLazyRoute
+  '/dosen/topics/$topicId': typeof DosenTopicsTopicIdLazyRoute
+  '/dosen/topics/create': typeof DosenTopicsCreateLazyRoute
+  '/account/dosen': typeof AccountDosenIndexLazyRoute
+  '/account/logbook': typeof AccountLogbookIndexLazyRoute
+  '/dosen/topics': typeof DosenTopicsIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
-  "/": typeof IndexLazyRoute;
-  "/logout": typeof LogoutLazyRoute;
-  "/account/changePassword": typeof AccountChangePasswordLazyRoute;
-  "/account/document": typeof AccountDocumentLazyRoute;
-  "/account/logbook": typeof AccountLogbookLazyRoute;
-  "/account/logbookprogress": typeof AccountLogbookprogressLazyRoute;
-  "/mahasiswa/pendaftar": typeof MahasiswaPendaftarLazyRoute;
-  "/absensi": typeof AbsensiIndexLazyRoute;
-  "/account": typeof AccountIndexLazyRoute;
-  "/logbook": typeof LogbookIndexLazyRoute;
-  "/mahasiswa": typeof MahasiswaIndexLazyRoute;
-  "/notification": typeof NotificationIndexLazyRoute;
-  "/topics": typeof TopicsIndexLazyRoute;
-  "/account/dosen/EditPassword": typeof AccountDosenEditPasswordLazyRoute;
-  "/dosen/topics/$topicId": typeof DosenTopicsTopicIdLazyRoute;
-  "/dosen/topics/create": typeof DosenTopicsCreateLazyRoute;
-  "/account/dosen": typeof AccountDosenIndexLazyRoute;
-  "/dosen/topics": typeof DosenTopicsIndexLazyRoute;
+  '/': typeof IndexLazyRoute
+  '/logout': typeof LogoutLazyRoute
+  '/account/changePassword': typeof AccountChangePasswordLazyRoute
+  '/account/document': typeof AccountDocumentLazyRoute
+  '/mahasiswa/pendaftar': typeof MahasiswaPendaftarLazyRoute
+  '/absensi': typeof AbsensiIndexLazyRoute
+  '/account': typeof AccountIndexLazyRoute
+  '/logbook': typeof LogbookIndexLazyRoute
+  '/mahasiswa': typeof MahasiswaIndexLazyRoute
+  '/notification': typeof NotificationIndexLazyRoute
+  '/topics': typeof TopicsIndexLazyRoute
+  '/account/dosen/EditPassword': typeof AccountDosenEditPasswordLazyRoute
+  '/account/logbook/$logbookId': typeof AccountLogbookLogbookIdLazyRoute
+  '/dosen/topics/$topicId': typeof DosenTopicsTopicIdLazyRoute
+  '/dosen/topics/create': typeof DosenTopicsCreateLazyRoute
+  '/account/dosen': typeof AccountDosenIndexLazyRoute
+  '/account/logbook': typeof AccountLogbookIndexLazyRoute
+  '/dosen/topics': typeof DosenTopicsIndexLazyRoute
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute;
-  "/": typeof IndexLazyRoute;
-  "/logout": typeof LogoutLazyRoute;
-  "/account/changePassword": typeof AccountChangePasswordLazyRoute;
-  "/account/document": typeof AccountDocumentLazyRoute;
-  "/account/logbook": typeof AccountLogbookLazyRoute;
-  "/account/logbookprogress": typeof AccountLogbookprogressLazyRoute;
-  "/mahasiswa/pendaftar": typeof MahasiswaPendaftarLazyRoute;
-  "/absensi/": typeof AbsensiIndexLazyRoute;
-  "/account/": typeof AccountIndexLazyRoute;
-  "/logbook/": typeof LogbookIndexLazyRoute;
-  "/mahasiswa/": typeof MahasiswaIndexLazyRoute;
-  "/notification/": typeof NotificationIndexLazyRoute;
-  "/topics/": typeof TopicsIndexLazyRoute;
-  "/account/dosen/EditPassword": typeof AccountDosenEditPasswordLazyRoute;
-  "/dosen/topics/$topicId": typeof DosenTopicsTopicIdLazyRoute;
-  "/dosen/topics/create": typeof DosenTopicsCreateLazyRoute;
-  "/account/dosen/": typeof AccountDosenIndexLazyRoute;
-  "/dosen/topics/": typeof DosenTopicsIndexLazyRoute;
+  __root__: typeof rootRoute
+  '/': typeof IndexLazyRoute
+  '/logout': typeof LogoutLazyRoute
+  '/account/changePassword': typeof AccountChangePasswordLazyRoute
+  '/account/document': typeof AccountDocumentLazyRoute
+  '/mahasiswa/pendaftar': typeof MahasiswaPendaftarLazyRoute
+  '/absensi/': typeof AbsensiIndexLazyRoute
+  '/account/': typeof AccountIndexLazyRoute
+  '/logbook/': typeof LogbookIndexLazyRoute
+  '/mahasiswa/': typeof MahasiswaIndexLazyRoute
+  '/notification/': typeof NotificationIndexLazyRoute
+  '/topics/': typeof TopicsIndexLazyRoute
+  '/account/dosen/EditPassword': typeof AccountDosenEditPasswordLazyRoute
+  '/account/logbook/$logbookId': typeof AccountLogbookLogbookIdLazyRoute
+  '/dosen/topics/$topicId': typeof DosenTopicsTopicIdLazyRoute
+  '/dosen/topics/create': typeof DosenTopicsCreateLazyRoute
+  '/account/dosen/': typeof AccountDosenIndexLazyRoute
+  '/account/logbook/': typeof AccountLogbookIndexLazyRoute
+  '/dosen/topics/': typeof DosenTopicsIndexLazyRoute
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | "/"
-    | "/logout"
-    | "/account/changePassword"
-    | "/account/document"
-    | "/account/logbook"
-    | "/account/logbookprogress"
-    | "/mahasiswa/pendaftar"
-    | "/absensi"
-    | "/account"
-    | "/logbook"
-    | "/mahasiswa"
-    | "/notification"
-    | "/topics"
-    | "/account/dosen/EditPassword"
-    | "/dosen/topics/$topicId"
-    | "/dosen/topics/create"
-    | "/account/dosen"
-    | "/dosen/topics";
-  fileRoutesByTo: FileRoutesByTo;
+    | '/'
+    | '/logout'
+    | '/account/changePassword'
+    | '/account/document'
+    | '/mahasiswa/pendaftar'
+    | '/absensi'
+    | '/account'
+    | '/logbook'
+    | '/mahasiswa'
+    | '/notification'
+    | '/topics'
+    | '/account/dosen/EditPassword'
+    | '/account/logbook/$logbookId'
+    | '/dosen/topics/$topicId'
+    | '/dosen/topics/create'
+    | '/account/dosen'
+    | '/account/logbook'
+    | '/dosen/topics'
+  fileRoutesByTo: FileRoutesByTo
   to:
-    | "/"
-    | "/logout"
-    | "/account/changePassword"
-    | "/account/document"
-    | "/account/logbook"
-    | "/account/logbookprogress"
-    | "/mahasiswa/pendaftar"
-    | "/absensi"
-    | "/account"
-    | "/logbook"
-    | "/mahasiswa"
-    | "/notification"
-    | "/topics"
-    | "/account/dosen/EditPassword"
-    | "/dosen/topics/$topicId"
-    | "/dosen/topics/create"
-    | "/account/dosen"
-    | "/dosen/topics";
+    | '/'
+    | '/logout'
+    | '/account/changePassword'
+    | '/account/document'
+    | '/mahasiswa/pendaftar'
+    | '/absensi'
+    | '/account'
+    | '/logbook'
+    | '/mahasiswa'
+    | '/notification'
+    | '/topics'
+    | '/account/dosen/EditPassword'
+    | '/account/logbook/$logbookId'
+    | '/dosen/topics/$topicId'
+    | '/dosen/topics/create'
+    | '/account/dosen'
+    | '/account/logbook'
+    | '/dosen/topics'
   id:
-    | "__root__"
-    | "/"
-    | "/logout"
-    | "/account/changePassword"
-    | "/account/document"
-    | "/account/logbook"
-    | "/account/logbookprogress"
-    | "/mahasiswa/pendaftar"
-    | "/absensi/"
-    | "/account/"
-    | "/logbook/"
-    | "/mahasiswa/"
-    | "/notification/"
-    | "/topics/"
-    | "/account/dosen/EditPassword"
-    | "/dosen/topics/$topicId"
-    | "/dosen/topics/create"
-    | "/account/dosen/"
-    | "/dosen/topics/";
-  fileRoutesById: FileRoutesById;
+    | '__root__'
+    | '/'
+    | '/logout'
+    | '/account/changePassword'
+    | '/account/document'
+    | '/mahasiswa/pendaftar'
+    | '/absensi/'
+    | '/account/'
+    | '/logbook/'
+    | '/mahasiswa/'
+    | '/notification/'
+    | '/topics/'
+    | '/account/dosen/EditPassword'
+    | '/account/logbook/$logbookId'
+    | '/dosen/topics/$topicId'
+    | '/dosen/topics/create'
+    | '/account/dosen/'
+    | '/account/logbook/'
+    | '/dosen/topics/'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute;
-  LogoutLazyRoute: typeof LogoutLazyRoute;
-  AccountChangePasswordLazyRoute: typeof AccountChangePasswordLazyRoute;
-  AccountDocumentLazyRoute: typeof AccountDocumentLazyRoute;
-  AccountLogbookLazyRoute: typeof AccountLogbookLazyRoute;
-  AccountLogbookprogressLazyRoute: typeof AccountLogbookprogressLazyRoute;
-  MahasiswaPendaftarLazyRoute: typeof MahasiswaPendaftarLazyRoute;
-  AbsensiIndexLazyRoute: typeof AbsensiIndexLazyRoute;
-  AccountIndexLazyRoute: typeof AccountIndexLazyRoute;
-  LogbookIndexLazyRoute: typeof LogbookIndexLazyRoute;
-  MahasiswaIndexLazyRoute: typeof MahasiswaIndexLazyRoute;
-  NotificationIndexLazyRoute: typeof NotificationIndexLazyRoute;
-  TopicsIndexLazyRoute: typeof TopicsIndexLazyRoute;
-  AccountDosenEditPasswordLazyRoute: typeof AccountDosenEditPasswordLazyRoute;
-  DosenTopicsTopicIdLazyRoute: typeof DosenTopicsTopicIdLazyRoute;
-  DosenTopicsCreateLazyRoute: typeof DosenTopicsCreateLazyRoute;
-  AccountDosenIndexLazyRoute: typeof AccountDosenIndexLazyRoute;
-  DosenTopicsIndexLazyRoute: typeof DosenTopicsIndexLazyRoute;
+  IndexLazyRoute: typeof IndexLazyRoute
+  LogoutLazyRoute: typeof LogoutLazyRoute
+  AccountChangePasswordLazyRoute: typeof AccountChangePasswordLazyRoute
+  AccountDocumentLazyRoute: typeof AccountDocumentLazyRoute
+  MahasiswaPendaftarLazyRoute: typeof MahasiswaPendaftarLazyRoute
+  AbsensiIndexLazyRoute: typeof AbsensiIndexLazyRoute
+  AccountIndexLazyRoute: typeof AccountIndexLazyRoute
+  LogbookIndexLazyRoute: typeof LogbookIndexLazyRoute
+  MahasiswaIndexLazyRoute: typeof MahasiswaIndexLazyRoute
+  NotificationIndexLazyRoute: typeof NotificationIndexLazyRoute
+  TopicsIndexLazyRoute: typeof TopicsIndexLazyRoute
+  AccountDosenEditPasswordLazyRoute: typeof AccountDosenEditPasswordLazyRoute
+  AccountLogbookLogbookIdLazyRoute: typeof AccountLogbookLogbookIdLazyRoute
+  DosenTopicsTopicIdLazyRoute: typeof DosenTopicsTopicIdLazyRoute
+  DosenTopicsCreateLazyRoute: typeof DosenTopicsCreateLazyRoute
+  AccountDosenIndexLazyRoute: typeof AccountDosenIndexLazyRoute
+  AccountLogbookIndexLazyRoute: typeof AccountLogbookIndexLazyRoute
+  DosenTopicsIndexLazyRoute: typeof DosenTopicsIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -475,8 +466,6 @@ const rootRouteChildren: RootRouteChildren = {
   LogoutLazyRoute: LogoutLazyRoute,
   AccountChangePasswordLazyRoute: AccountChangePasswordLazyRoute,
   AccountDocumentLazyRoute: AccountDocumentLazyRoute,
-  AccountLogbookLazyRoute: AccountLogbookLazyRoute,
-  AccountLogbookprogressLazyRoute: AccountLogbookprogressLazyRoute,
   MahasiswaPendaftarLazyRoute: MahasiswaPendaftarLazyRoute,
   AbsensiIndexLazyRoute: AbsensiIndexLazyRoute,
   AccountIndexLazyRoute: AccountIndexLazyRoute,
@@ -485,15 +474,17 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationIndexLazyRoute: NotificationIndexLazyRoute,
   TopicsIndexLazyRoute: TopicsIndexLazyRoute,
   AccountDosenEditPasswordLazyRoute: AccountDosenEditPasswordLazyRoute,
+  AccountLogbookLogbookIdLazyRoute: AccountLogbookLogbookIdLazyRoute,
   DosenTopicsTopicIdLazyRoute: DosenTopicsTopicIdLazyRoute,
   DosenTopicsCreateLazyRoute: DosenTopicsCreateLazyRoute,
   AccountDosenIndexLazyRoute: AccountDosenIndexLazyRoute,
+  AccountLogbookIndexLazyRoute: AccountLogbookIndexLazyRoute,
   DosenTopicsIndexLazyRoute: DosenTopicsIndexLazyRoute,
-};
+}
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {
@@ -505,8 +496,6 @@ export const routeTree = rootRoute
         "/logout",
         "/account/changePassword",
         "/account/document",
-        "/account/logbook",
-        "/account/logbookprogress",
         "/mahasiswa/pendaftar",
         "/absensi/",
         "/account/",
@@ -515,9 +504,11 @@ export const routeTree = rootRoute
         "/notification/",
         "/topics/",
         "/account/dosen/EditPassword",
+        "/account/logbook/$logbookId",
         "/dosen/topics/$topicId",
         "/dosen/topics/create",
         "/account/dosen/",
+        "/account/logbook/",
         "/dosen/topics/"
       ]
     },
@@ -532,12 +523,6 @@ export const routeTree = rootRoute
     },
     "/account/document": {
       "filePath": "account/document.lazy.jsx"
-    },
-    "/account/logbook": {
-      "filePath": "account/logbook.lazy.jsx"
-    },
-    "/account/logbookprogress": {
-      "filePath": "account/logbookprogress.lazy.jsx"
     },
     "/mahasiswa/pendaftar": {
       "filePath": "mahasiswa/pendaftar.lazy.jsx"
@@ -563,6 +548,9 @@ export const routeTree = rootRoute
     "/account/dosen/EditPassword": {
       "filePath": "account/dosen/EditPassword.lazy.jsx"
     },
+    "/account/logbook/$logbookId": {
+      "filePath": "account/logbook/$logbookId.lazy.jsx"
+    },
     "/dosen/topics/$topicId": {
       "filePath": "dosen/topics/$topicId.lazy.jsx"
     },
@@ -571,6 +559,9 @@ export const routeTree = rootRoute
     },
     "/account/dosen/": {
       "filePath": "account/dosen/index.lazy.jsx"
+    },
+    "/account/logbook/": {
+      "filePath": "account/logbook/index.lazy.jsx"
     },
     "/dosen/topics/": {
       "filePath": "dosen/topics/index.lazy.jsx"

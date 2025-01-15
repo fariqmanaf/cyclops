@@ -14,12 +14,9 @@ import {
   getMahasiswaByTopic,
   getAttendanceDetails,
 } from "@/service/absensi";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "@tanstack/react-router";
 import { Protected } from "@/components/OurComponent/AuthMiddleware";
-import { record } from "zod";
 
 export const Route = createLazyFileRoute("/absensi/")({
   component: () => (
@@ -137,21 +134,11 @@ function AbsensiMahasiswa() {
     );
   }
 
-  if (topicsError || studentsError) {
-    return (
-      <Alert variant="destructive" className="mx-4 my-2">
-        <AlertDescription>
-          {topicsError?.message || studentsError?.message}
-        </AlertDescription>
-      </Alert>
-    );
-  }
-
   return (
     <>
       <Navbar isAuth={true} />
       <div className="w-full max-w-6xl mx-auto p-6 space-y-4">
-        <h1 className="text-2xl font-bold mb-6">Absensi</h1>
+        <h1 className="text-2xl font-bold mt-[4vh] mb-[1vh]">Absensi</h1>
 
         <Card className="border shadow-sm">
           <CardContent className="p-8 px-2 relative">
@@ -189,7 +176,7 @@ function AbsensiMahasiswa() {
           </CardContent>
         </Card>
 
-        {!isStudentsLoading && students.length > 0 && (
+        {!isStudentsLoading && students.length > 0 ? (
           <div className="space-y-4">
             {students.map((student) => (
               <Card key={student.id} className="border shadow-sm">
@@ -224,7 +211,14 @@ function AbsensiMahasiswa() {
               </Card>
             ))}
           </div>
-        )}
+        ) : (
+          <Card className="border shadow-sm">
+            <CardContent className="p-8 px-40 justify-center flex">
+              <div className="text-gray-500">No students found</div>
+            </CardContent>
+          </Card>
+        )
+        }
 
         <Dialog open={showAttendance} onOpenChange={setShowAttendance}>
           <DialogContent className="sm:max-w-md">
