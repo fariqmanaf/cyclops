@@ -35,7 +35,7 @@ function Profile() {
       value: user?.email,
     },
     {
-      label: "NIP",
+      label: "NIM",
       value: user?.nim,
     },
     {

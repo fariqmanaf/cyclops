@@ -25,6 +25,7 @@ export const createLogbookDetail = async (id, formData) => {
     formData.append('kendala', data.kendala);
     formData.append('output', data.output);
     formData.append('rincianKegiatan', data.rincianKegiatan);
+    formData.append('izin', data.izin);
     
     // Add file if exists
     if (data.buktiKegiatan) {
@@ -32,4 +33,23 @@ export const createLogbookDetail = async (id, formData) => {
     }
   
     return formData;
+  };
+
+export const fetchLogbookById = async (id) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/logbook/${id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  
+    const result = await response.json();
+    
+    if (result.status === 'Failed') {
+      throw new Error(result.message || 'Terjadi kesalahan');
+    }
+  
+    return result.data;
   };

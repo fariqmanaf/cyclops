@@ -22,6 +22,11 @@ const Logbook = () => {
     retry: 2,
   });
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('id-ID', options);
+  };
+
   const weeks = Array.from({ length: 6 }, (_, i) => ({
     id: `${i + 1}`,
     title: `Minggu ${i + 1}`,
@@ -78,7 +83,10 @@ const Logbook = () => {
                             className="p-4 border rounded-lg hover:border-blue-200 transition-colors cursor-pointer"
                             onClick={() => navigate({ to: `/account/logbook/${logbookProgress.id}`})}
                             >
-                              {logbook.nama}
+                              <div className="flex flex-col justify-between ">
+                                <span className="text-blue-500">{logbook.nama}</span>
+                                <span className=" font-normal text-xs"> Batas Pengumpulan: {formatDate(logbook.tglTerakhir)}</span>
+                              </div>
                           </div>
                         ))}
                       </div>
