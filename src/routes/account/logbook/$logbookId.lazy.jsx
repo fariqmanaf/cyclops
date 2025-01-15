@@ -11,6 +11,9 @@ import { useMutation } from '@tanstack/react-query'
 import { createLogbookDetail } from '@/service/account/createLogbook'
 import { createLogbookFormData } from '@/service/account/createLogbook'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { useQuery } from '@tanstack/react-query'
+import { fetchLogbookById } from '@/service/account/createLogbook'
+import { useNavigate } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/account/logbook/$logbookId')({
   component: () => (
@@ -21,8 +24,9 @@ export const Route = createLazyFileRoute('/account/logbook/$logbookId')({
 })
 
 function ProgressLogbook() {
+  const navigate = useNavigate();
+  const logbookId = Route.useParams().logbookId;
 
-  const logbookId = Route.useParams().logbookId
   const mutation = useMutation({
     mutationFn: async (formData) => {
       const logbookFormData = createLogbookFormData({
@@ -32,29 +36,51 @@ function ProgressLogbook() {
         kendala: formData.get('kendala'),
         output: formData.get('output'),
         buktiKegiatan: formData.get('buktiKegiatan'),
+        izin: formData.get('izin') || null
       });
 
-      console.log(logbookFormData);
-      
       return createLogbookDetail(logbookId, logbookFormData);
-    }
+    },
+    onSuccess: () => {
+      navigate('/account/logbook'); // Navigate to logbook list after success
+    },
   });
+
+  const { data: logbookData, isLoading } = useQuery({
+    queryKey: ['logbook', logbookId],
+    queryFn: () => fetchLogbookById(logbookId),
+    enabled: !!logbookId,
+  });
+
+  const openNewTab = (url) => {
+    window.open(url, "_blank");
+  };
+
+  console.log(logbookData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    const isIzinChecked = e.target.izin.checked;
+    formData.set('izin', isIzinChecked ? 'izin' : null);
+
     mutation.mutate(formData);
-    console.log(formData);
   };
+
+  if (isLoading) {
+    return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-[#273B4A] border-opacity-75"></div>
+      <p className="mt-4 text-[#273B4a] font-semibold">Loading, please wait...</p>
+    </div>
+    ); // Show a loading message or spinner while data is being fetched
+  }
 
   return (
     <>
       <Navbar isAuth={true} />
       <div className="w-full max-w-2xl mx-auto p-4">
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold">Pengumpulan Logbook</h2>
-        </div>
-  
+        <h2 className="text-lg font-semibold mb-4">Pengumpulan Logbook</h2>
         <Card>
           <CardContent className="pt-6">
             {mutation.isError && (
@@ -64,72 +90,91 @@ function ProgressLogbook() {
                 </AlertDescription>
               </Alert>
             )}
-  
+
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                  <p className="text-sm text-gray-600">
-                    Dimulai: Senin, 7 Oktober 2024, 12:00
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">
-                    Tanggal: Jumat, 11 Oktober 2024, 12:00
-                  </p>
-                </div>
-              </div>
-  
               <div className="space-y-2">
                 <div>
                   <Label htmlFor="namaDosen">Nama Dosen</Label>
-                  <Input id="namaDosen" name="namaDosen" required />
-                </div>
-  
-                <div>
-                  <Label htmlFor="target">Target</Label>
-                  <Textarea id="target" name="target" required />
-                </div>
-  
-                <div>
-                  <Label htmlFor="rincianKegiatan">Rincian Kegiatan</Label>
-                  <Textarea id="rincianKegiatan" name="rincianKegiatan" required />
-                </div>
-  
-                <div>
-                  <Label htmlFor="kendala">Kendala</Label>
-                  <Textarea id="kendala" name="kendala" required />
-                </div>
-  
-                <div>
-                  <Label htmlFor="buktiKegiatan">Bukti Kegiatan</Label>
-                  <Input 
-                    id="buktiKegiatan" 
-                    name="buktiKegiatan" 
-                    type="file" 
-                    className="mt-1 cursor-pointer" 
-                    required 
+                  <Input
+                    id="namaDosen"
+                    name="namaDosen"
+                    defaultValue={logbookData[0]?.namaDosen || ''}
+                    required
                   />
                 </div>
-  
+
+                <div>
+                  <Label htmlFor="target">Target</Label>
+                  <Textarea id="target" name="target" defaultValue={logbookData[0]?.target || ''} required />
+                </div>
+
+                <div>
+                  <Label htmlFor="rincianKegiatan">Rincian Kegiatan</Label>
+                  <Textarea
+                    id="rincianKegiatan"
+                    name="rincianKegiatan"
+                    defaultValue={logbookData[0]?.rincianKegiatan || ''}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="kendala">Kendala</Label>
+                  <Textarea id="kendala" name="kendala" defaultValue={logbookData[0]?.kendala || ''} required />
+                </div>
+
+                { logbookData[0]?.buktiKegiatan ? (
+                  <div>
+                    <Label htmlFor="buktiKegiatan">Bukti Kegiatan</Label>
+                    <p className="text-sm text-gray-500">Current file: 
+                      <span className='text-blue-600 cursor-pointer' onClick={() => openNewTab(logbookData[0]?.buktiKegiatan)}> Klik Disini</span>
+                    </p>
+                    <Input
+                      id="buktiKegiatan"
+                      name="buktiKegiatan"
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="mt-1 cursor-pointer"
+                      required
+                    />
+                  </div>
+                ):(
+                  <div>
+                    <Label htmlFor="buktiKegiatan">Bukti Kegiatan</Label>
+                    <Input
+                      id="buktiKegiatan"
+                      name="buktiKegiatan"
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="mt-1 cursor-pointer"
+                      required
+                    />
+                  </div>
+                )}
+
                 <div>
                   <Label htmlFor="output">Output</Label>
-                  <Textarea id="output" name="output" required />
+                  <Textarea id="output" name="output" defaultValue={logbookData[0]?.output || ''} required />
+                </div>
+
+                <div className="flex items-center">
+                  <Label htmlFor="izin">Izin</Label>
+                  <Input
+                    id="izin"
+                    name="izin"
+                    type="checkbox"
+                    className="cursor-pointer "
+                    defaultChecked={logbookData[0]?.izin == 'izin'} // Pre-check if izin exists and is true
+                  />
                 </div>
               </div>
-  
+
               <div className="flex justify-between pt-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => window.history.back()}
-                >
+                <Button type="button" variant="outline" onClick={() => navigate({ to : '/account/logbook'})}>
                   Kembali
                 </Button>
-                <Button 
-                  type="submit"
-                  disabled={mutation.isPending}
-                >
-                  {mutation.isPending ? 'Mengirim...' : 'Selesai'}
+                <Button type="submit" disabled={mutation.isPending}>
+                  {mutation.isPending ? 'Mengirim...' : logbookData[0] ? 'Simpan' : 'Selesai'}
                 </Button>
               </div>
             </form>
@@ -137,5 +182,5 @@ function ProgressLogbook() {
         </Card>
       </div>
     </>
-  )
+  );
 }
