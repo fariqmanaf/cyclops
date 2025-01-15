@@ -12,14 +12,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Check, X } from "lucide-react";
 import { getDocument } from "@/service/account/document";
 import { useQuery } from "@tanstack/react-query";
-import { useToaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const DataDokumen = () => {
   const [formInputs, setFormInputs] = useState({
     dropMatakuliah: "",
     jumlahMatakuliah: "",
   });
-  const  {toast}  = useToaster();
   const [isEditing, setIsEditing] = useState(false);
   const [files, setFiles] = useState({});
 
@@ -43,7 +42,7 @@ const DataDokumen = () => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["documents"],
+    queryKey: ["document"],
     queryFn: getDocument,
   });
 
@@ -57,19 +56,12 @@ const DataDokumen = () => {
     },
     onSuccess: (formdata) => {
       setIsEditing(false);
-      toast.success({
-        title: "Berhasil",
-        description: "Dokumen berhasil disimpan",
-      });
+      toast.success("Berhasil");
       setFiles({ cv: null, transkripNilai: null });
       setFormInputs({ dropMatakuliah: "", jumlahMatakuliah: "" });
     },
     onError: (error) => {
-      toast.error({
-        variant: "destructive",
-        title: "Error",
-        description: error.message,
-      });
+      toast.error(error.message);
     },
   });
 
