@@ -1,0 +1,149 @@
+import { createLazyFileRoute } from '@tanstack/react-router'
+import { useState, useEffect, useMemo } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { MoreVertical } from 'lucide-react'
+import Navbar from '@/components/OurComponent/Navbar'
+import DataProfileDosen from '@/components/OurComponent/Profile/ProfileDosen'
+import SidebarDosen from '@/components/OurComponent/Sidebar/Dosen'
+import { Button } from '@/components/ui/button'
+import { useReactTable } from '@tanstack/react-table'
+import { Table, TableBody, TableCell, TableHeader, TableHead, TableRow } from '@/components/ui/table'
+import { flexRender, getCoreRowModel } from '@tanstack/react-table'
+import { getProfile } from '@/service/account/userAccount'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Protected } from '@/components/OurComponent/AuthMiddleware'
+
+export const Route = createLazyFileRoute('/account/dosen/')({
+  component: () => (
+    <Protected roles={['dosen']}>
+      <ProfileDosen />
+    </Protected>
+  ),
+})
+
+function ProfileDosen() {
+    const [profileData, setProfileData] = useState([
+        { label: 'Nama Lengkap', value: '' },
+        { label: 'Alamat Email', value: '' },
+        { label: 'NIP', value: '' },
+        { label: 'Nomor telepon', value: '' },
+      ]);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const columns = useMemo(
+    () => [
+        {
+        accessorKey: 'label',
+        header: 'Label',
+        },
+        {
+        accessorKey: 'value',
+        header: 'Value',
+        },
+    ],
+    []
+    );
+
+    const table = useReactTable({
+    data: profileData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    });
+
+    const fetchProfile = async () => {
+    try {
+        setLoading(true);
+        const data = await getProfile();
+        setProfileData([
+        { label: 'Nama Lengkap', value: data.name },
+        { label: 'Alamat Email', value: data.email },
+        { label: 'NIP', value: data.nim },
+        { label: 'Nomor telepon', value: data.noHp },
+        ]);
+        setError('');
+    } catch (error) {
+        setError(error.message);
+    } finally {
+        setLoading(false);
+    }
+    };
+
+    useEffect(() => {
+    fetchProfile();
+    }, []);
+
+    const handleEditProfile = () => {
+    // Implement edit profile logic
+    console.log('Edit profile clicked');
+    };
+
+    const handleExportData = () => {
+    // Implement export data logic
+    console.log('Export data clicked');
+    };
+    
+    return (
+    <>
+        <Navbar isAuth={true}/>
+        <div className="container mx-auto p-6 flex flex-col md:flex-row gap-6">
+        <div className="w-full md:w-80 space-y-6">
+            <DataProfileDosen />
+            <SidebarDosen />
+        </div>
+        <Card className="flex-1 bg-white">
+            <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle>Profil</CardTitle>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                    <MoreVertical className="h-5 w-5" />
+                </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleEditProfile}>
+                    Edit Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleExportData}>
+                    Export Data
+                </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+            </CardHeader>
+            <CardContent>
+            <Table>
+                <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                        <TableHead key={header.id}>
+                        {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                        )}
+                        </TableHead>
+                    ))}
+                    </TableRow>
+                ))}
+                </TableHeader>
+                <TableBody>
+                {table.getRowModel().rows.map((row) => (
+                    <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                        {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                        )}
+                        </TableCell>
+                    ))}
+                    </TableRow>
+                ))}
+                </TableBody>
+            </Table>
+            </CardContent>
+        </Card>
+        </div>
+    </>
+    )
+}
