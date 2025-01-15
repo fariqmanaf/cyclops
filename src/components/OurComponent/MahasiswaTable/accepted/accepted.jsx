@@ -32,8 +32,8 @@ export function MahasiswaAcceptedTable({ data, isLoading }) {
           <TableHead className="">Nama</TableHead>
           <TableHead className="">NIM</TableHead>
           <TableHead className="">Topik</TableHead>
-          <TableHead className="">No Whatsapp</TableHead>
           <TableHead className="">Program Studi</TableHead>
+          <TableHead className="">No Whatsapp</TableHead>
           <TableHead className="">Role</TableHead>
         </TableRow>
       </TableHeader>

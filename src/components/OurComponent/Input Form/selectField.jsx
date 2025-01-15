@@ -19,6 +19,7 @@ export function SelectFieldComponent({
   label,
   items,
   placeholder,
+  onChange,
 }) {
   return (
     <FormField
@@ -27,7 +28,13 @@ export function SelectFieldComponent({
       render={({ field }) => (
         <FormItem className="w-full">
           <FormLabel className=" text-sm font-semibold">{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select
+            onValueChange={(value) => {
+              field.onChange(value);
+              if (onChange) onChange(value);
+            }}
+            defaultValue={field.value}
+          >
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />

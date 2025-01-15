@@ -10,6 +10,13 @@ import { useSelector } from "react-redux";
 export function CardTopics({ data, isDosen, setDeletedTopic }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [role, setRole] = useState([]);
+
+  useEffect(() => {
+    if (data?.role) {
+      setRole(data?.role);
+    }
+  }, [data]);
 
   const user = useSelector((state) => state.auth.user);
 
@@ -42,9 +49,9 @@ export function CardTopics({ data, isDosen, setDeletedTopic }) {
       <div>
         <p className="text-gray-600 font-semibold">Roles:</p>
         <ul className="list-disc pl-6">
-          {data?.role.map((role, index) => (
+          {role?.map((role, index) => (
             <li className="text-sm" key={index}>
-              {role.nama}
+              {role?.nama}
             </li>
           ))}
         </ul>
@@ -66,7 +73,7 @@ export function CardTopics({ data, isDosen, setDeletedTopic }) {
         )}
         <DialogTopic
           topicId={data.id}
-          role={data?.role}
+          role={role}
           setIsDialogOpen={setIsDialogOpen}
         />
       </Dialog>

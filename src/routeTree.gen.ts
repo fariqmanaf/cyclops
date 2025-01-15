@@ -16,6 +16,7 @@ import { Route as rootRoute } from "./routes/__root";
 
 // Create Virtual Routes
 
+const LogoutLazyImport = createFileRoute("/logout")();
 const IndexLazyImport = createFileRoute("/")();
 const TopicsIndexLazyImport = createFileRoute("/topics/")();
 const NotificationIndexLazyImport = createFileRoute("/notification/")();
@@ -43,6 +44,12 @@ const AccountDosenEditPasswordLazyImport = createFileRoute(
 )();
 
 // Create/Update Routes
+
+const LogoutLazyRoute = LogoutLazyImport.update({
+  id: "/logout",
+  path: "/logout",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import("./routes/logout.lazy").then((d) => d.Route));
 
 const IndexLazyRoute = IndexLazyImport.update({
   id: "/",
@@ -190,6 +197,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof IndexLazyImport;
       parentRoute: typeof rootRoute;
     };
+    "/logout": {
+      id: "/logout";
+      path: "/logout";
+      fullPath: "/logout";
+      preLoaderRoute: typeof LogoutLazyImport;
+      parentRoute: typeof rootRoute;
+    };
     "/account/changePassword": {
       id: "/account/changePassword";
       path: "/account/changePassword";
@@ -309,6 +323,7 @@ declare module "@tanstack/react-router" {
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexLazyRoute;
+  "/logout": typeof LogoutLazyRoute;
   "/account/changePassword": typeof AccountChangePasswordLazyRoute;
   "/account/document": typeof AccountDocumentLazyRoute;
   "/account/logbook": typeof AccountLogbookLazyRoute;
@@ -329,6 +344,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   "/": typeof IndexLazyRoute;
+  "/logout": typeof LogoutLazyRoute;
   "/account/changePassword": typeof AccountChangePasswordLazyRoute;
   "/account/document": typeof AccountDocumentLazyRoute;
   "/account/logbook": typeof AccountLogbookLazyRoute;
@@ -350,6 +366,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute;
   "/": typeof IndexLazyRoute;
+  "/logout": typeof LogoutLazyRoute;
   "/account/changePassword": typeof AccountChangePasswordLazyRoute;
   "/account/document": typeof AccountDocumentLazyRoute;
   "/account/logbook": typeof AccountLogbookLazyRoute;
@@ -372,6 +389,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | "/"
+    | "/logout"
     | "/account/changePassword"
     | "/account/document"
     | "/account/logbook"
@@ -391,6 +409,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/"
+    | "/logout"
     | "/account/changePassword"
     | "/account/document"
     | "/account/logbook"
@@ -410,6 +429,7 @@ export interface FileRouteTypes {
   id:
     | "__root__"
     | "/"
+    | "/logout"
     | "/account/changePassword"
     | "/account/document"
     | "/account/logbook"
@@ -431,6 +451,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute;
+  LogoutLazyRoute: typeof LogoutLazyRoute;
   AccountChangePasswordLazyRoute: typeof AccountChangePasswordLazyRoute;
   AccountDocumentLazyRoute: typeof AccountDocumentLazyRoute;
   AccountLogbookLazyRoute: typeof AccountLogbookLazyRoute;
@@ -451,6 +472,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  LogoutLazyRoute: LogoutLazyRoute,
   AccountChangePasswordLazyRoute: AccountChangePasswordLazyRoute,
   AccountDocumentLazyRoute: AccountDocumentLazyRoute,
   AccountLogbookLazyRoute: AccountLogbookLazyRoute,
@@ -480,6 +502,7 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
+        "/logout",
         "/account/changePassword",
         "/account/document",
         "/account/logbook",
@@ -500,6 +523,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.lazy.jsx"
+    },
+    "/logout": {
+      "filePath": "logout.lazy.jsx"
     },
     "/account/changePassword": {
       "filePath": "account/changePassword.lazy.jsx"

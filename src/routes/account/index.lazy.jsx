@@ -1,12 +1,5 @@
-import DataProfile from '@/components/OurComponent/Profile'
-import SidebarMahasiswa from '@/components/OurComponent/Sidebar/Mahasiswa'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import DataProfile from "@/components/OurComponent/Profile";
+import SidebarMahasiswa from "@/components/OurComponent/Sidebar/Mahasiswa";
 import {
   Table,
   TableBody,
@@ -14,96 +7,47 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import {
-  useReactTable,
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-} from '@tanstack/react-table'
-import { createLazyFileRoute } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { MoreVertical } from 'lucide-react'
-import Navbar from '@/components/OurComponent/Navbar'
-import { Protected } from '@/components/OurComponent/AuthMiddleware'
-import { getProfile } from '@/service/account/userAccount'
-import { useMemo } from 'react'
+} from "@/components/ui/table";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Navbar from "@/components/OurComponent/Navbar";
+import { Protected } from "@/components/OurComponent/AuthMiddleware";
+import { useSelector } from "react-redux";
 
-export const Route = createLazyFileRoute('/account/')({
+export const Route = createLazyFileRoute("/account/")({
   component: () => (
-    <Protected roles={['mahasiswa']}>
+    <Protected roles={["mahasiswa"]}>
       <Profile />
     </Protected>
   ),
-})
+});
 
 function Profile() {
-  const [profileData, setProfileData] = useState([
-    { label: 'Nama Lengkap', value: '' },
-    { label: 'Alamat Email', value: '' },
-    { label: 'NIM', value: '' },
-    { label: 'Nomor telepon', value: '' },
-  ]);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.auth?.user);
 
-  const columns = useMemo(
-    () => [
-      {
-        accessorKey: 'label',
-        header: 'Label',
-      },
-      {
-        accessorKey: 'value',
-        header: 'Value',
-      },
-    ],
-    []
-  );
-
-  const table = useReactTable({
-    data: profileData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
-  const fetchProfile = async () => {
-    try {
-      setLoading(true);
-      const data = await getProfile();
-      setProfileData([
-        { label: 'Nama Lengkap', value: data.name },
-        { label: 'Alamat Email', value: data.email },
-        { label: 'NIM', value: data.nim },
-        { label: 'Nomor telepon', value: data.noHp },
-      ]);
-      setError('');
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  const handleEditProfile = () => {
-    // Implement edit profile logic
-    console.log('Edit profile clicked');
-  };
-
-  const handleExportData = () => {
-    // Implement export data logic
-    console.log('Export data clicked');
-  };
+  const data = [
+    {
+      label: "Nama Lengkap",
+      value: user?.name,
+    },
+    {
+      label: "Alamat Email",
+      value: user?.email,
+    },
+    {
+      label: "NIP",
+      value: user?.nim,
+    },
+    {
+      label: "Nomor Telepon",
+      value: user?.noHp,
+    },
+  ];
 
   return (
     <>
-      <Navbar isAuth={true}/>
-      <div className="container mx-auto p-6 flex flex-col md:flex-row gap-6">
+      <Navbar isAuth={true} />
+      <div className="container mx-auto p-6 flex flex-col md:flex-row gap-6 mt-0 md:mt-[10vh]">
         <div className="w-full md:w-80 space-y-6">
           <DataProfile />
           <SidebarMahasiswa />
@@ -111,49 +55,20 @@ function Profile() {
         <Card className="flex-1 bg-white">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Profil</CardTitle>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <MoreVertical className="h-5 w-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={handleEditProfile}>
-                  Edit Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleExportData}>
-                  Export Data
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <TableHead key={header.id}>
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                ))}
+                <TableRow>
+                  <TableHead>Label</TableHead>
+                  <TableHead>Value</TableHead>
+                </TableRow>
               </TableHeader>
               <TableBody>
-                {table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
+                {data.map((item) => (
+                  <TableRow>
+                    <TableCell>{item.label}</TableCell>
+                    <TableCell>{item.value}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -162,5 +77,5 @@ function Profile() {
         </Card>
       </div>
     </>
-  )
+  );
 }

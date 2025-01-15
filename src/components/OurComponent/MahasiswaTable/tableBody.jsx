@@ -17,12 +17,11 @@ import { useMutation } from "@tanstack/react-query";
 import { accMahasiswa, declineMahasiswa } from "@/service/topics/mahasiswa";
 import ReactLoading from "react-loading";
 import toast from "react-hot-toast";
-import { getProfile } from "@/service/auth";
 
 export function BodyTabelMahasiswa({ id, item, roles, index, setDataTable }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(roles[0]?.value || ""); // Add state for selected role
+  const [selectedRole, setSelectedRole] = useState(roles[0]?.value || "");
 
   const { mutate, isPending } = useMutation({
     mutationFn: (body) => {

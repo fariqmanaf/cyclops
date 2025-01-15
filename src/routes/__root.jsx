@@ -54,6 +54,12 @@ function Root() {
     if (location.pathname === "*") {
       navigate({ to: "/404" });
     }
+    if (location.pathname === "/logout") {
+      localStorage.removeItem("token");
+      dispatch(setToken(null));
+      dispatch(setUser(null));
+      navigate({ to: "/" });
+    }
   }, [location, navigate]);
 
   return (

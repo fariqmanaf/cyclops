@@ -64,7 +64,7 @@ export function DialogTopic({ topicId, role, setIsDialogOpen }) {
     mode: "onChange",
   });
 
-  const roles = role.map((item) => ({
+  const roles = role?.map((item) => ({
     label: item?.nama,
     value: item?.nama,
   }));

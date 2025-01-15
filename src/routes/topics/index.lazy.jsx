@@ -50,7 +50,7 @@ function TopicsComponent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            {topicsData.map((topic) => (
+            {topicsData?.map((topic) => (
               <CardTopics key={topic.id} data={topic} />
             ))}
           </motion.div>
