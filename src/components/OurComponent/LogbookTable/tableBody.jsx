@@ -14,6 +14,8 @@ export function BodyTabelLogbook({ item }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const date = new Date(item?.uploadAt);
 
+  console.log(item.izin);
+
   const openNewTab = (url) => {
     window.open(url, "_blank");
   };
@@ -76,15 +78,34 @@ export function BodyTabelLogbook({ item }) {
           </Dialog>
         </TableCell>
         <TableCell>
-          {new Date(item?.uploadAt) > new Date(item?.logbook?.tglTerakhir) ? (
-            <div className="text-center p-1 bg-yellow-600 text-white rounded-full">
-              Telat
-            </div>
-          ) : (
-            <div className="text-center p-1 bg-blue-600 text-white rounded-full">
-              Hadir
-            </div>
-          )}
+          {(() => {
+            if (
+              item?.izin === "true" &&
+              new Date(item?.uploadAt) < new Date(item?.logbook?.tglTerakhir)
+            ) {
+              return (
+                <div className="text-center p-1 bg-yellow-600 text-white rounded-full">
+                  Izin
+                </div>
+              );
+            } else if (
+              new Date(item?.uploadAt) < new Date(item?.logbook?.tglTerakhir)
+            ) {
+              return (
+                <div className="text-center p-1 bg-blue-600 text-white rounded-full">
+                  Hadir
+                </div>
+              );
+            } else if (
+              new Date(item?.uploadAt) > new Date(item?.logbook?.tglTerakhir)
+            ) {
+              return (
+                <div className="text-center p-1 bg-red-600 text-white rounded-full">
+                  Alpha
+                </div>
+              );
+            }
+          })()}
         </TableCell>
       </TableRow>
     </>
