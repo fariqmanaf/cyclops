@@ -21,7 +21,6 @@ import toast from "react-hot-toast";
 export function BodyTabelMahasiswa({ id, item, roles, index, setDataTable }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(roles[0]?.value || "");
 
   const { mutate, isPending } = useMutation({
     mutationFn: (body) => {
@@ -54,18 +53,13 @@ export function BodyTabelMahasiswa({ id, item, roles, index, setDataTable }) {
   const form = useForm({
     mode: "onChange",
     defaultValues: {
-      [id]: roles[0]?.value || "",
+      [id]: "",
     },
   });
 
-  useEffect(() => {
-    form.setValue(id, roles[0]?.value || "");
-    setSelectedRole(roles[0]?.value || "");
-  }, [roles, id, form]);
-
   const onSubmit = (data) => {
     const dataFetch = {
-      role1: selectedRole,
+      role1: data[id],
     };
     mutate(dataFetch);
     setIsDialogOpen(false);
@@ -160,8 +154,7 @@ export function BodyTabelMahasiswa({ id, item, roles, index, setDataTable }) {
                 items={roles}
                 form={form}
                 identifier={`${id}`}
-                value={selectedRole}
-                onChange={(value) => setSelectedRole(value)}
+                placeholder={"Pilih Role"}
               />
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger>

@@ -44,6 +44,7 @@ export const accMahasiswa = async (body, id) => {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
     },
