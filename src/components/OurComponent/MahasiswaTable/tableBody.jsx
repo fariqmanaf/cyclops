@@ -58,11 +58,16 @@ export function BodyTabelMahasiswa({ id, item, roles, index, setDataTable }) {
   });
 
   const onSubmit = (data) => {
-    const dataFetch = {
-      role1: data[id],
-    };
-    mutate(dataFetch);
-    setIsDialogOpen(false);
+    if (data[id] === "") {
+      toast.error("Pilih Role terlebih dahulu");
+      return;
+    } else {
+      const dataFetch = {
+        role1: data[id],
+      };
+      mutate(dataFetch);
+      setIsDialogOpen(false);
+    }
   };
 
   const onDecline = () => {

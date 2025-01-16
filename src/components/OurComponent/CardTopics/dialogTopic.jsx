@@ -30,26 +30,35 @@ export function DialogTopic({ topicId, role, setIsDialogOpen }) {
     },
   });
 
-  const formSchema = z.object({
-    nama: z.string().nonempty({
-      message: "Nama tidak boleh kosong",
-    }),
-    nim: z.string().nonempty({
-      message: "NIM tidak boleh kosong",
-    }),
-    noHp: z.string().nonempty({
-      message: "Nomor Telepon tidak boleh kosong",
-    }),
-    prodi: z.string().nonempty({
-      message: "Program Studi tidak boleh kosong",
-    }),
-    role1: z.string().nonempty({
-      message: "Role 1 tidak boleh kosong",
-    }),
-    role2: z.string().nonempty({
-      message: "Role 2 tidak boleh kosong",
-    }),
-  });
+  const formSchema = z
+    .object({
+      nama: z.string().nonempty({
+        message: "Nama tidak boleh kosong",
+      }),
+      nim: z.string().nonempty({
+        message: "NIM tidak boleh kosong",
+      }),
+      noHp: z.string().nonempty({
+        message: "Nomor Telepon tidak boleh kosong",
+      }),
+      prodi: z.string().nonempty({
+        message: "Program Studi tidak boleh kosong",
+      }),
+      role1: z.string().nonempty({
+        message: "Role 1 tidak boleh kosong",
+      }),
+      role2: z.string().nonempty({
+        message: "Role 2 tidak boleh kosong",
+      }),
+    })
+    .superRefine(({ role1, role2 }, ctx) => {
+      if (role1 === role2) {
+        ctx.addIssue({
+          path: ["role2"],
+          message: "Role 1 dan Role 2 tidak boleh sama",
+        });
+      }
+    });
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -125,7 +134,11 @@ export function DialogTopic({ topicId, role, setIsDialogOpen }) {
             />
           </div>
           <DialogFooter>
-            <Button className="self-center" type="submit">
+            <Button
+              className="self-center"
+              type="submit"
+              disabled={!form.formState.isValid}
+            >
               {isPending ? (
                 <ReactLoading
                   type={"spin"}
